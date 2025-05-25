@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>作業批改回饋區</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+    <style>
+      body {
+        background-color: #f7f6f5;
+      }
+
+      .container {
+        max-width: 1300px;
+        padding: 0 24px;
+      }
+
+      .text-box {
+        padding: 16px 20px 12px 12px;
+        border: 2px solid #dbdbdb;
+        border-radius: 10px;
+        background-color: #f8f8f7;
+      }
+
+      .btn-copy {
+        color: #6e7781;
+      }
+      .btn-clear {
+        color: #df6b42;
+      }
+
+      .auto-resize-textarea {
+        width: 100%;
+        overflow: hidden;
+        resize: none;
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+
+      .section-title {
+        color: #6e7781;
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      .section-text {
+        color: #6e7781;
+      }
+
+      .table-box {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .title {
+        padding: 0 0 12px;
+      }
+
+      .title-success {
+        color: #57ad57;
+        border: 0 solid #57ad57;
+        border-bottom-width: 1px;
+      }
+      .title-danger {
+        color: #da0000;
+        border: 0 solid #da0000;
+        border-bottom-width: 1px;
+      }
+
+      .title-warning {
+        color: #f89100;
+        border: 0 solid #f89100;
+        border-bottom-width: 1px;
+      }
+
+      .table-box h2 {
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      .table-box h2 small {
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      th {
+        color: #a9b2ba !important;
+        font-size: 14px;
+      }
+
+      td i {
+        font-size: 24px;
+      }
+
+      .content-box {
+        margin-bottom: 40px;
+      }
+
+      .content {
+        background-color: white;
+        padding: 20px 24px;
+        border-radius: 16px 16px 0 16px;
+      }
+
+      .content-box small {
+        color: #a9b2ba;
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body class="container py-5">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="text-box d-flex flex-column justify-content-between h-100">
+          <div class="d-flex gap-2">
+            <div class="edit-icon">
+              <img
+                src="https://www.notion.so/icons/drafts_gray.svg?mode=light"
+                style="width: 24px"
+              />
+            </div>
+            <div id="previewArea"></div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-copy" onclick="copyFeedback()">
+              <i class="ph ph-copy me-1"></i>複製
+            </button>
+            <button class="btn btn-clear" onclick="clearFeedback()">
+              <i class="ph ph-broom me-1"></i>清除
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex flex-column justify-content-between h-100">
+          <div class="p-3">
+            <h1 class="section-title">助教 Duki 的作業批改區</h1>
+            <ol class="section-text mt-3">
+              <li>此批改表記錄到學員卡片時「批改狀態」更新為「已完成」</li>
+              <li>其他的注意事項請填寫備註...</li>
+            </ol>
+          </div>
+          <div class="d-flex gap-3">
+            <div class="content-box w-100">
+              <div class="content">
+                這份作業在「基礎錯誤」項目有被扣分，因此作業評級為「有待加強」
+              </div>
+              <small>批改結果僅作為參考，助教仍可斟酌調整評級</small>
+            </div>
+            <div class="d-flex align-items-end">
+              <img
+                src="https://i.ibb.co/qFYQP9Wg/Student-Avatar.png"
+                style="width: 100px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="table-box">
+          <div>
+            <h2
+              class="d-flex justify-content-between align-items-end title title-success"
+            >
+              <span><i class="ph-fill ph-star-four pe-1"></i>鼓勵區</span>
+              <small>批改作業之外也要記得鼓勵同學做得好的地方喔！</small>
+            </h2>
+
+            <table class="table table-borderless align-middle mt-3 table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 5%"></th>
+                  <th scope="col" style="width: 5%">分數</th>
+                  <th scope="col" style="width: 15%">批改項目</th>
+                  <th scope="col" style="width: 80%">回饋內容</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-1"></tbody>
+            </table>
+          </div>
+          <div class="pt-5">
+            <h2
+              class="d-flex justify-content-between align-items-end title title-danger"
+            >
+              <span><i class="ph-fill ph-star-four pe-1"></i>基礎錯誤區</span>
+              <small
+                >此區項目為本週作業的核心重點，若犯了基礎錯誤，則表示學員的基礎不穩</small
+              >
+            </h2>
+
+            <table class="table table-borderless align-middle mt-3 table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 5%"></th>
+                  <th scope="col" style="width: 5%">分數</th>
+                  <th scope="col" style="width: 15%">批改項目</th>
+                  <th scope="col" style="width: 80%">回饋內容</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-2"></tbody>
+            </table>
+          </div>
+          <div class="pt-5">
+            <h2
+              class="d-flex justify-content-between align-items-end title title-warning"
+            >
+              <span><i class="ph-fill ph-star-four pe-1"></i>進階錯誤區</span>
+              <small
+                >此區項目為 Nice to Have，若協助指出錯誤，可讓學員的 UI
+                能力更加進步</small
+              >
+            </h2>
+
+            <table class="table table-borderless align-middle mt-3 table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 5%"></th>
+                  <th scope="col" style="width: 5%">分數</th>
+                  <th scope="col" style="width: 15%">批改項目</th>
+                  <th scope="col" style="width: 80%">回饋內容</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-3"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let totalScore = 0;
+      let openingText = "";
+      let closingText = "";
+      let md = "";
+      let feedbackList = [];
+
+      try {
+        google.script.run
+          .withSuccessHandler((data) => {
+            openingText = data.opening;
+            closingText = data.closing;
+            createButtons(data.praiseData, "tbody-1", "praise");
+            createButtons(data.baseDeductData, "tbody-2", "base");
+            createButtons(data.advDeductData, "tbody-3", "adv");
+            updateFeedbackArea();
+          })
+          .getFeedbackData();
+      } catch (ex) {
+        openingText = "嗨我是 Nelly，恭喜完成第一週作業";
+        closingText = "期待再收到你讚讚的作業 💪🏻";
+        const praiseData = [
+          ["鼓勵1", "還行", "1"],
+          ["鼓勵2", "還OK", "1"],
+        ];
+        const baseDeductData = [
+          ["基扣1", "加油", "-1"],
+          ["基扣2", "好嗎", "-1"],
+        ];
+        const advDeductData = [
+          ["進扣1", "爛鼠", "-1"],
+          ["進扣2", "氣鼠", "-1"],
+        ];
+        createButtons(praiseData, "tbody-1", "praise");
+        createButtons(baseDeductData, "tbody-2", "base");
+        createButtons(advDeductData, "tbody-3", "adv");
+        updateFeedbackArea();
+      }
+
+      function createButtons(items, containerId, type) {
+        console.log(items);
+        items.forEach(([title, content, score]) => {
+          const tr = document.createElement("tr");
+          const isSelected = feedbackList.some(
+            (i) => i.title === title && i.type === type
+          );
+          const iconClass = isSelected ? "ph-check-square" : "ph-square";
+          tr.innerHTML = `
+          <td style="text-align: center;"><i class="ph ${iconClass}"></i></td>
+          <td>${score > 0 ? "+" + score : score}</td>
+          <td>${title}</td>
+          <td>${content}</td>
+        `;
+          tr.onclick = () => {
+            const icon = tr.querySelector("td i");
+
+            if (icon.classList.contains("ph-check-square")) {
+              icon.classList.remove("ph-check-square");
+              icon.classList.add("ph-square");
+              deleteItem(title, content, score, type);
+            } else {
+              icon.classList.remove("ph-square");
+              icon.classList.add("ph-check-square");
+              addItem(title, content, score, type);
+            }
+          };
+          const tbody = document.getElementById(containerId);
+          tbody.appendChild(tr);
+        });
+      }
+
+      function addItem(title, content, score, type) {
+        const item = {
+          content: `- ${content}`,
+          title,
+          score: parseInt(score),
+          type,
+        };
+        feedbackList.push(item);
+        updateFeedbackArea();
+      }
+
+      function deleteItem(title, content, score, type) {
+        feedbackList = feedbackList.filter(
+          (i) => !(i.title === title && i.type === type)
+        );
+        updateFeedbackArea();
+      }
+
+      function updateFeedbackArea() {
+        console.log(feedbackList);
+        const good =
+          feedbackList
+            .filter((f) => f.type === "praise")
+            .map((f) => f.content)
+            .join("\n\n") || "- ";
+        const better =
+          feedbackList
+            .filter((f) => f.type !== "praise")
+            .map((f) => f.content)
+            .join("\n\n") || "- ";
+        md = `${openingText}\n\n### 做得好的地方\n${good}\n\n### 可以再更好的地方\n${better}\n\n${closingText}`;
+        document.getElementById("previewArea").innerHTML = marked.parse(md);
+      }
+
+      function copyFeedback() {
+        navigator.clipboard
+          .writeText(md)
+          .then(() => {
+            Swal.fire({
+              icon: "success",
+              title: "已複製",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "複製失敗",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      }
+
+      function clearFeedback() {
+        feedbackList = [];
+        updateFeedbackArea();
+
+        const icons = document.querySelectorAll("tr i");
+
+        icons.forEach((icon) => {
+          if (icon.classList.contains("ph-check-square")) {
+            icon.classList.remove("ph-check-square");
+            icon.classList.add("ph-square");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
