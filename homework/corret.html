@@ -318,9 +318,9 @@
           const isSelected = feedbackList.some(
             (i) => i.title === title && i.type === type
           );
-          const iconClass = isSelected ? "ph-fill ph-check-square" : "ph-square";
+          const iconClass = isSelected ? "ph-fill ph-check-square" : "ph ph-square";
           tr.innerHTML = `
-          <td style="text-align: center;"><i class="ph ${iconClass}"></i></td>
+          <td style="text-align: center;"><i class="${iconClass}"></i></td>
           <td>${score > 0 ? "+" + score : score}</td>
           <td>${title}</td>
           <td>${content}</td>
@@ -329,11 +329,15 @@
             const icon = tr.querySelector("td i");
 
             if (icon.classList.contains("ph-check-square")) {
+              icon.classList.remove("ph-fill");
               icon.classList.remove("ph-check-square");
+              icon.classList.add("ph");
               icon.classList.add("ph-square");
               deleteItem(title, content, score, type);
             } else {
+              icon.classList.remove("ph");
               icon.classList.remove("ph-square");
+              icon.classList.add("ph-fill");
               icon.classList.add("ph-check-square");
               addItem(title, content, score, type);
             }
@@ -405,7 +409,9 @@
 
         icons.forEach((icon) => {
           if (icon.classList.contains("ph-check-square")) {
+            icon.classList.remove("ph-fill");
             icon.classList.remove("ph-check-square");
+            icon.classList.add("ph");
             icon.classList.add("ph-square");
           }
         });
