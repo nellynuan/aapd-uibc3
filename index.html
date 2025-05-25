@@ -1,13 +1,274 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
-    <meta charset="UTF-8">
-    <title>自動導向批改系統</title>
-    <script>
-      window.location.href = "https://script.google.com/macros/s/AKfycbzRgkSf9thPztJ0VMm7APBDVn-jC9BiAhdTPlVz8RPDqYxRDHKWjokqDyHef-k3L1s-/exec";
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>實戰營作業批改系統</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+    <style>
+      body {
+        background: #f7f6f5;
+        padding-bottom: 80px;
+      }
+      .container {
+        max-width: calc(var(--bs-gutter-x) + 800px);
+      }
+      .banner {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 32px;
+      }
+
+      .banner img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .banner h1 {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        margin: 0;
+      }
+
+      .card {
+        border: none;
+      }
+      .section-title {
+        background: #0c4285;
+        color: #fff;
+        border-radius: 8px 8px 0 0;
+        padding: 12px 24px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 140%;
+      }
+
+      .section-item {
+        border: 1.5px solid #dbdbdb;
+        border-radius: 8px;
+        padding: 20px 24px;
+        cursor: pointer;
+      }
+
+      .section-item span {
+        font-size: 20px;
+        font-weight: 400;
+        color: #24292f;
+      }
+
+      .ph-check-circle {
+        color: #57ad57;
+        font-size: 24px;
+      }
+
+      .ph-circle {
+        color: #dbdbdb;
+        font-size: 24px;
+      }
+
+      .card-body {
+        padding: 40px;
+      }
+
+      .item-select {
+        border: 1.5px solid #57ad57;
+      }
+
+      .item-select .ph-circle {
+        display: none;
+      }
+
+      .item-select .ph-check-circle {
+        display: block !important;
+      }
+
+      .avatar-item {
+        padding: 16px;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+      }
+
+      .submit-btn {
+        background-color: #0c4285;
+        padding: 12px;
+        width: 160px;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      
+      .card-ta {
+        margin-bottom: 32px;
+      }
+    </style>
   </head>
   <body>
-    <p>正在前往批改系統...</p>
+    <div class="container">
+      <div class="banner">
+        <img src="https://i.imgur.com/mjOU6eB.png" alt="Banner" />
+        <h1>實戰營作業批改系統</h1>
+      </div>
+
+      <div class="card card-work mb-4">
+        <div class="section-title">請選擇批改的作業週次</div>
+        <div class="card-body d-flex justify-content-center gap-4">
+          <div
+            class="section-item d-flex align-items-center gap-2 item-select"
+            onclick="selectWork(this)"
+          >
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+            <span>Week1 作業</span>
+          </div>
+          <div
+            class="section-item d-flex align-items-center gap-2"
+            onclick="selectWork(this)"
+          >
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+            <span>Week2 作業</span>
+          </div>
+          <div
+            class="section-item d-flex align-items-center gap-2"
+            onclick="selectWork(this)"
+          >
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+            <span>Week3 作業</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-ta">
+        <div class="section-title">請選擇批改的助教</div>
+        <div class="card-body d-flex justify-content-center flex-wrap gap-4">
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3 item-select"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/8eRmkpA.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/zhHudSi.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/0c5om0u.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/39pBKwr.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/qk6UnLC.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/iqKWBjd.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/LNjKHMI.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+          <div
+            class="section-item avatar-item d-flex flex-column align-items-center gap-3"
+            onclick="selectTA(this)"
+          >
+            <div class="avatar">
+              <img class="w-100" src="https://i.imgur.com/OvkbXdO.png" />
+            </div>
+            <i class="ph-fill ph-check-circle d-none"></i>
+            <i class="ph ph-circle"></i>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary submit-btn">送出</button>
+      </div>
+    </div>
+
+    <script>
+      function selectWork(card) {
+        document
+          .querySelectorAll(".card-work .section-item")
+          .forEach(function (el) {
+            el.classList.remove("item-select");
+          });
+        card.classList.add("item-select");
+      }
+
+      function selectTA(card) {
+        document
+          .querySelectorAll(".card-ta .section-item")
+          .forEach(function (el) {
+            el.classList.remove("item-select");
+          });
+        card.classList.add("item-select");
+      }
+    </script>
   </body>
 </html>
