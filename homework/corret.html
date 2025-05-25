@@ -283,8 +283,8 @@
       let feedbackList = [];
 
       Swal.fire({
-        title: "請稍候...",
-        text: "資料載入中",
+        title: "改完作業要記得休息喔！",
+        text: "資料比較多，給它一點時間...",
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -318,7 +318,7 @@
           const isSelected = feedbackList.some(
             (i) => i.title === title && i.type === type
           );
-          const iconClass = isSelected ? "ph-check-square" : "ph-square";
+          const iconClass = isSelected ? "ph-fill ph-check-square" : "ph-square";
           tr.innerHTML = `
           <td style="text-align: center;"><i class="ph ${iconClass}"></i></td>
           <td>${score > 0 ? "+" + score : score}</td>
