@@ -159,7 +159,10 @@
       <div class="col-md-6">
         <div class="d-flex flex-column justify-content-between h-100">
           <div class="p-3">
-            <h1 class="section-title">助教 Duki 的作業批改區</h1>
+            <h1 class="section-title">
+              助教 <span id="ta_text"></span> 的
+              <span id="work_text"></span> 作業批改區
+            </h1>
             <ol class="section-text mt-3">
               <li>此批改表記錄到學員卡片時「批改狀態」更新為「已完成」</li>
               <li>其他的注意事項請填寫備註...</li>
@@ -254,43 +257,55 @@
       </div>
     </div>
     <script>
+      const api = {
+        Week1:
+          "https://script.google.com/macros/s/AKfycbyxa9E3B32vr1aYXVGWttrUdPtS7huVZOU30r_surMb-R500rRD0DbZzofVWfXogPpt/exec",
+        Week2:
+          "https://script.google.com/macros/s/AKfycbxBsdr6vJEia049Y-yymZdJZRqJr9F7a80i6PQTya-GkQITqIlxHhF_l5paa8IlvxI/exec",
+        Week3:
+          "https://script.google.com/macros/s/AKfycbxC-CfDsxOeWGmbiEIFoN248cZKVtCHBXb9fMKkOlF7VhDHgXFsTf0iyaJ2vZqt6d7WbQ/exec",
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const work = params.get("work");
+      const ta = params.get("ta");
+      document.getElementById("ta_text").innerText = ta;
+      document.getElementById("work_text").innerText = work;
+
       let totalScore = 0;
       let openingText = "";
       let closingText = "";
       let md = "";
       let feedbackList = [];
 
-      try {
-        google.script.run
-          .withSuccessHandler((data) => {
-            openingText = data.opening;
-            closingText = data.closing;
-            createButtons(data.praiseData, "tbody-1", "praise");
-            createButtons(data.baseDeductData, "tbody-2", "base");
-            createButtons(data.advDeductData, "tbody-3", "adv");
-            updateFeedbackArea();
-          })
-          .getFeedbackData();
-      } catch (ex) {
-        openingText = "嗨我是 Nelly，恭喜完成第一週作業";
-        closingText = "期待再收到你讚讚的作業 💪🏻";
-        const praiseData = [
-          ["鼓勵1", "還行", "1"],
-          ["鼓勵2", "還OK", "1"],
-        ];
-        const baseDeductData = [
-          ["基扣1", "加油", "-1"],
-          ["基扣2", "好嗎", "-1"],
-        ];
-        const advDeductData = [
-          ["進扣1", "爛鼠", "-1"],
-          ["進扣2", "氣鼠", "-1"],
-        ];
-        createButtons(praiseData, "tbody-1", "praise");
-        createButtons(baseDeductData, "tbody-2", "base");
-        createButtons(advDeductData, "tbody-3", "adv");
-        updateFeedbackArea();
-      }
+      Swal.fire({
+        title: "請稍候...",
+        text: "資料載入中",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      fetch(api[work] + "?ta=" + ta)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          openingText = data.opening;
+          closingText = data.closing;
+          createButtons(data.praiseData, "tbody-1", "praise");
+          createButtons(data.baseDeductData, "tbody-2", "base");
+          createButtons(data.advDeductData, "tbody-3", "adv");
+          updateFeedbackArea();
+          Swal.close();
+        })
+        .catch((error) => {
+          alert("發生錯誤 " + error);
+        });
 
       function createButtons(items, containerId, type) {
         console.log(items);
