@@ -238,9 +238,9 @@
           <!-- 左側：Callout 區塊（原本的回饋內容） -->
           <div class="bottom-left">
             <div class="text-box">
-              <!-- 上區塊：回饋內容區 -->
+              <!-- 上區塊：回饋內容區，flex: 1 填滿剩餘空間 -->
               <div class="callout-content-area">
-                <div class="edit-icon" style="flex-shrink: 0;">
+                <div class="edit-icon" style="flex-shrink: 0; padding: 4px 0 0 12px;">
                   <img
                     src="https://www.notion.so/icons/drafts_gray.svg?mode=light"
                     style="width: 24px"
@@ -251,16 +251,14 @@
                 </div>
               </div>
 
-              <!-- 下區塊：按鈕區 -->
+              <!-- 下區塊：按鈕區，固定高度 -->
               <div class="callout-button-area">
-                <div class="d-flex justify-content-end">
-                  <button class="btn btn-copy" onclick="copyFeedback()">
-                    <i class="ph ph-copy me-1"></i>複製
-                  </button>
-                  <button class="btn btn-clear" onclick="clearFeedback()">
-                    <i class="ph ph-broom me-1"></i>清除
-                  </button>
-                </div>
+                <button class="btn btn-copy" onclick="copyFeedback()">
+                  <i class="ph ph-copy me-1"></i>複製
+                </button>
+                <button class="btn btn-clear" onclick="clearFeedback()">
+                  <i class="ph ph-broom me-1"></i>清除
+                </button>
               </div>
             </div>
           </div>
