@@ -1,17 +1,4 @@
-.condition-text {
-        flex: 1;
-        font-size: 16px;
-        color: #374151;
-        padding: 8px 0;
-        line-height: 1.5;
-        min-height: 24px;
-        display: flex;
-        align-items: center;
-      }
-
-      .callout h3 {
-        font-size: 20px;
-      }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
@@ -153,125 +140,9 @@
         align-items: center;
       }
 
-      .condition-group {
-        padding-top: 8px;
-      }
-
-      .condition-item {
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 6px;
-        transition: background-color 0.2s;
-      }
-
-      .condition-buttons {
-        display: flex;
-        gap: 8px;
-        flex-shrink: 0;
-      }
-
-      .condition-btn {
-        width: 32px;
-        height: 32px;
-        border: 1px solid #D0D7DE;
-        border-radius: 4px;
-        background: #FFFFFF;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .condition-btn i {
+      .table-box h2 i {
         font-size: 20px;
-      }
-
-      /* [O] 按鈕樣式 */
-      .condition-btn.correct-btn i {
-        color: #57AD57;
-      }
-
-      .condition-btn.correct-btn:hover {
-        border-color: #BADEBA;
-        background-color: #EEF7EE;
-      }
-
-      .condition-btn.correct-btn:hover i {
-        color: #57AD57;
-      }
-
-      .condition-btn.correct-btn.active-correct {
-        border-color: #BADEBA;
-        background-color: #57AD57;
-      }
-
-      .condition-btn.correct-btn.active-correct i {
-        color: #FFFFFF;
-      }
-
-      /* [X] 按鈕樣式 */
-      .condition-btn.incorrect-btn i {
-        color: #DF6B42;
-      }
-
-      .condition-btn.incorrect-btn:hover {
-        border-color: #F0BBA8;
-        background-color: #FBEEE9;
-      }
-
-      .condition-btn.incorrect-btn:hover i {
-        color: #DF6B42;
-      }
-
-      .condition-btn.incorrect-btn.active-incorrect {
-        border-color: #F0BBA8;
-        background-color: #DF6B42;
-      }
-
-      .condition-btn.incorrect-btn.active-incorrect i {
-        color: #FFFFFF;
-      }
-
-      .condition-text {
-        flex: 1;
-        font-size: 16px;
-        color: #374151;
-      }
-
-      .category-row {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 16px;
-        color: #AFB8C1;
-      }
-
-      .info-button {
-        width: 32px;
-        height: 32px;
-        border: none;
-        background: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #AFB8C1;
-        cursor: pointer;
-        border-radius: 4px;
-        margin-left: 4px;
-      }
-
-      .info-button:hover {
-        background-color: transparent;
-      }
-
-      .info-button i {
-        font-size: 20px;
-        transition: all 0.2s;
+        margin-right: 8px;
       }
 
       .table-box h2 small {
@@ -308,7 +179,6 @@
         font-size: 16px;
       }
 
-      /* 新增的結構樣式 */
       .top-section {
         flex-shrink: 0;
         margin-bottom: 24px;
@@ -355,11 +225,155 @@
         right: 20px;
         flex-shrink: 0;
       }
+
+      .condition-group {
+        padding-top: 8px;
+      }
+
+      .condition-item {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: background-color 0.2s;
+      }
+
+      .condition-buttons {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .condition-btn {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #D0D7DE;
+        border-radius: 4px;
+        background: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .condition-btn i {
+        font-size: 20px;
+      }
+
+      .condition-btn.correct-btn i {
+        color: #57AD57;
+      }
+
+      .condition-btn.correct-btn:hover {
+        border-color: #BADEBA;
+        background-color: #EEF7EE;
+      }
+
+      .condition-btn.correct-btn:hover i {
+        color: #57AD57;
+      }
+
+      .condition-btn.correct-btn.active-correct {
+        border-color: #BADEBA;
+        background-color: #57AD57;
+      }
+
+      .condition-btn.correct-btn.active-correct i {
+        color: #FFFFFF;
+      }
+
+      .condition-btn.incorrect-btn i {
+        color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn:hover {
+        border-color: #F0BBA8;
+        background-color: #FBEEE9;
+      }
+
+      .condition-btn.incorrect-btn:hover i {
+        color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn.active-incorrect {
+        border-color: #F0BBA8;
+        background-color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn.active-incorrect i {
+        color: #FFFFFF;
+      }
+
+      .condition-text {
+        flex: 1;
+        font-size: 16px;
+        color: #374151;
+        padding: 8px 0;
+        line-height: 1.5;
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .category-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 16px;
+        color: #AFB8C1;
+      }
+
+      .info-button {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #AFB8C1;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-left: 4px;
+      }
+
+      .info-button:hover {
+        background-color: transparent;
+      }
+
+      .info-button i {
+        font-size: 20px;
+        transition: all 0.2s;
+      }
+
+      .category-items .condition-item {
+        display: flex;
+        align-items: center;
+        padding: 4px 0;
+        margin-bottom: 4px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .category-items .condition-item:hover {
+        background-color: #F7F6F5;
+      }
+
+      .category-items .condition-item i {
+        color: #6E7781;
+        font-size: 24px;
+        margin-right: 8px;
+      }
+
+      #previewArea h3 {
+        font-size: 20px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- 上方區域：標題+注意事項 和 作業表現結果 並排 -->
       <div class="top-section">
         <div class="d-flex gap-3">
           <div class="top-left">
@@ -393,10 +407,8 @@
         </div>
       </div>
 
-      <!-- 下方區域：Callout區塊 和 批改表格 並排，高度 Fill -->
       <div class="bottom-section">
         <div class="d-flex gap-2 h-100">
-          <!-- 左側：Callout 區塊（原本的回饋內容） -->
           <div class="bottom-left">
             <div class="text-box">
               <div class="d-flex gap-2 h-100" style="align-items: flex-start;">
@@ -422,7 +434,6 @@
             </div>
           </div>
 
-          <!-- 右側：批改表格 -->
           <div class="bottom-right">
             <div class="table-box">
               <div>
@@ -461,6 +472,15 @@
     </div>
 
     <script>
+      let totalScore = 0;
+      let openingText = "";
+      let closingText = "";
+      let md = "";
+      let feedbackList = [];
+      let originalOrder = [];
+      let originalOrderAdvanced = {};
+      let originalOrderChallenge = {};
+
       const api = {
         Week1:
           "https://script.google.com/macros/s/AKfycbyxa9E3B32vr1aYXVGWttrUdPtS7huVZOU30r_surMb-R500rRD0DbZzofVWfXogPpt/exec",
@@ -475,12 +495,6 @@
       const ta = params.get("ta");
       document.getElementById("ta_text").innerText = ta;
       document.getElementById("work_text").innerText = work;
-
-      let totalScore = 0;
-      let openingText = "";
-      let closingText = "";
-      let md = "";
-      let feedbackList = [];
 
       Swal.fire({
         title: "改完作業要記得休息喔！",
@@ -511,14 +525,10 @@
           alert("發生錯誤 " + error);
         });
 
-      let originalOrder = []; // 儲存原始順序
-      let categoryData = {}; // 儲存類別資料（用於 tooltips）
-      
       function createButtons(items, containerId, type) {
         console.log(items);
         
         if (type === "praise") {
-          // 基礎條件：[批改項目, 項目類別說明, 回饋內容, 結果(O/X)]
           const container = document.getElementById("condition-group-1");
           
           const groupedItems = {};
@@ -571,26 +581,32 @@
           });
           
         } else if (type === "base" || type === "adv") {
-          // 進階/挑戰條件：[項目類別, 項目類別說明, 批改項目, 回饋內容, 分數]
           const targetDiv = type === "base" ? "advanced-conditions" : "challenge-conditions";
           
-          // 按類別分組
           const categorizedItems = {};
+          const categoryOrder = {};
+          
           items.forEach(([category, categoryDesc, item, content, score]) => {
             if (!categorizedItems[category]) {
               categorizedItems[category] = {
                 description: categoryDesc,
                 items: []
               };
+              categoryOrder[category] = [];
             }
             categorizedItems[category].items.push([item, content, score]);
+            categoryOrder[category].push(item);
           });
           
-          // 為每個類別生成 UI
+          if (type === "base") {
+            originalOrderAdvanced = categoryOrder;
+          } else {
+            originalOrderChallenge = categoryOrder;
+          }
+          
           Object.keys(categorizedItems).forEach(category => {
             const categoryData = categorizedItems[category];
             
-            // 創建類別標題
             const categoryDiv = document.createElement("div");
             categoryDiv.className = "category-section";
             categoryDiv.innerHTML = `
@@ -603,17 +619,17 @@
               <div class="category-items" id="${targetDiv}-${category.replace(/\s+/g, '-')}"></div>
             `;
             
-            // 將類別添加到對應區域
             const targetElement = document.querySelector(`#${targetDiv}`);
             if (targetElement) {
               targetElement.appendChild(categoryDiv);
             }
             
-            // 為該類別下的項目創建 checkbox
             const itemsContainer = categoryDiv.querySelector('.category-items');
             categoryData.items.forEach(([item, content, score]) => {
               const itemDiv = document.createElement("div");
               itemDiv.className = "condition-item";
+              itemDiv.dataset.category = category;
+              itemDiv.dataset.item = item;
               itemDiv.innerHTML = `
                 <i class="ph ph-square" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
                 <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
@@ -621,19 +637,7 @@
               `;
               
               itemDiv.onclick = () => {
-                const icon = itemDiv.querySelector("i");
-                const isSelected = icon.classList.contains("ph-check-square");
-                
-                if (isSelected) {
-                  icon.classList.remove("ph-fill", "ph-check-square");
-                  icon.classList.add("ph", "ph-square");
-                  deleteItem(item, content, score, type);
-                } else {
-                  icon.classList.remove("ph", "ph-square");
-                  icon.classList.add("ph-fill", "ph-check-square");
-                  addItem(item, content, score, type);
-                }
-                updateFeedbackArea(); // 更新 callout 內容
+                handleCategoryItemClick(category, item, content, score, type, itemDiv);
               };
               
               itemsContainer.appendChild(itemDiv);
@@ -642,27 +646,50 @@
         }
       }
       
+      function handleCategoryItemClick(category, item, content, score, type, clickedDiv) {
+        const icon = clickedDiv.querySelector("i");
+        const isSelected = icon.classList.contains("ph-check-square");
+        
+        if (isSelected) {
+          icon.classList.remove("ph-fill", "ph-check-square");
+          icon.classList.add("ph", "ph-square");
+          deleteItem(item, content, score, type);
+        } else {
+          const categoryItems = document.querySelectorAll(`[data-category="${category}"]`);
+          categoryItems.forEach(div => {
+            const otherIcon = div.querySelector("i");
+            if (otherIcon.classList.contains("ph-check-square")) {
+              otherIcon.classList.remove("ph-fill", "ph-check-square");
+              otherIcon.classList.add("ph", "ph-square");
+              const otherItem = div.dataset.item;
+              feedbackList = feedbackList.filter(f => !(f.type === type && f.title === otherItem));
+            }
+          });
+          
+          icon.classList.remove("ph", "ph-square");
+          icon.classList.add("ph-fill", "ph-check-square");
+          addItem(item, content, score, type);
+        }
+        
+        updateFeedbackArea();
+      }
+      
       function handleConditionClick(title, result, content, activeBtn, otherBtn, type) {
-        // 移除其他按鈕的 active 狀態
         otherBtn.classList.remove('active-correct', 'active-incorrect');
         
-        // 檢查當前按鈕是否已經是 active
         const isCurrentlyActive = activeBtn.classList.contains('active-correct') || 
                                  activeBtn.classList.contains('active-incorrect');
         
         if (isCurrentlyActive) {
-          // 如果已經是 active，則取消選擇
           activeBtn.classList.remove('active-correct', 'active-incorrect');
           deleteItem(title, content, 0, type);
         } else {
-          // 設置當前按鈕為 active
           if (result === 'O') {
             activeBtn.classList.add('active-correct');
           } else {
             activeBtn.classList.add('active-incorrect');
           }
           
-          // 先移除該項目的舊記錄，再添加新記錄
           feedbackList = feedbackList.filter(item => item.title !== title);
           addItem(title, content, 0, type);
         }
@@ -689,7 +716,6 @@
       function updateFeedbackArea() {
         console.log(feedbackList);
         
-        // 基礎條件按照原始順序排列
         const orderedBasicConditions = [];
         if (originalOrder.length > 0) {
           originalOrder.forEach(title => {
@@ -700,21 +726,30 @@
           });
         }
         
-        // 進階條件
-        const advancedConditions = feedbackList
-          .filter((f) => f.type === "base")
-          .map((f) => f.content);
+        const orderedAdvancedConditions = [];
+        Object.keys(originalOrderAdvanced).forEach(category => {
+          originalOrderAdvanced[category].forEach(itemTitle => {
+            const item = feedbackList.find(f => f.type === "base" && f.title === itemTitle);
+            if (item) {
+              orderedAdvancedConditions.push(item.content);
+            }
+          });
+        });
         
-        // 挑戰條件
-        const challengeConditions = feedbackList
-          .filter((f) => f.type === "adv")
-          .map((f) => f.content);
+        const orderedChallengeConditions = [];
+        Object.keys(originalOrderChallenge).forEach(category => {
+          originalOrderChallenge[category].forEach(itemTitle => {
+            const item = feedbackList.find(f => f.type === "adv" && f.title === itemTitle);
+            if (item) {
+              orderedChallengeConditions.push(item.content);
+            }
+          });
+        });
         
         const basic = orderedBasicConditions.length > 0 ? orderedBasicConditions.join("\n\n") : "- ";
-        const advanced = advancedConditions.length > 0 ? advancedConditions.join("\n\n") : "";
-        const challenge = challengeConditions.length > 0 ? challengeConditions.join("\n\n") : "";
+        const advanced = orderedAdvancedConditions.length > 0 ? orderedAdvancedConditions.join("\n\n") : "";
+        const challenge = orderedChallengeConditions.length > 0 ? orderedChallengeConditions.join("\n\n") : "";
         
-        // 組合 markdown，只有有內容的類別才顯示
         let feedbackContent = `${openingText}\n\n### 基礎條件\n${basic}`;
         
         if (advanced) {
