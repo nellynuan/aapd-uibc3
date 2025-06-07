@@ -76,19 +76,28 @@
       }
 
       .section-text {
-        color: #6e7781;
+        color: #32302C;
+      }
+
+      .section-text a {
+        color: #32302C;
+        text-decoration: underline;
+      }
+
+      .section-text a:hover {
+        color: #1a1816;
       }
 
       .table-box {
         background-color: #fff;
         border-radius: 8px;
-        padding: 24px;
+        padding: 20px;
         height: 100%;
         overflow-y: auto;
       }
 
       .title {
-        padding: 0 0 12px;
+        padding: 0 0 8px;
       }
 
       .title-success {
@@ -109,8 +118,47 @@
       }
 
       .table-box h2 {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
+
+      .condition-group {
+        padding-top: 8px;
+      }
+
+      .condition-group tr {
+        margin-bottom: 8px;
+      }
+
+      .category-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 16px;
+        gap: 8px;
+      }
+
+      .info-button {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #AFB8C1;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .info-button:hover {
+        background-color: rgba(175, 184, 193, 0.1);
+      }
+
+      .info-button i {
+        font-size: 20px;
       }
 
       .table-box h2 small {
@@ -128,7 +176,7 @@
       }
 
       .content-box {
-        margin-bottom: 40px;
+        margin-bottom: 24px;
       }
 
       .content {
@@ -208,8 +256,8 @@
                 <span id="work_text"></span> 作業批改區
               </h1>
               <ol class="section-text mt-3">
-                <li>批改完記得將作業小卡的「批改狀態」更新為「已完成」</li>
-                <li>其他的注意事項還沒想好QQ...</li>
+                <li>記得檢查是否有更新作業小卡上「繳交狀態」、「批改狀態」、「批改班長」的欄位</li>
+                <li>批改完成後，記得將右側的「作業表現」結果更新至「<a href="https://www.notion.so/simonlin7972/UIBC-3-1f895b29efc980bc9a2ef5a24eba8e60?source=copy_link#1f895b29efc980b684f8f67bc8b00721" target="_blank">班長作業＆專案批改區</a>」</li>
               </ol>
             </div>
           </div>
@@ -224,7 +272,7 @@
               <div class="d-flex align-items-end">
                 <img
                   src="https://i.ibb.co/qFYQP9Wg/Student-Avatar.png"
-                  style="width: 100px"
+                  style="width: 60px; height: 60px;"
                 />
               </div>
             </div>
@@ -238,9 +286,8 @@
           <!-- 左側：Callout 區塊（原本的回饋內容） -->
           <div class="bottom-left">
             <div class="text-box">
-              <!-- 上區塊：回饋內容區，flex: 1 填滿剩餘空間 -->
-              <div class="callout-content-area">
-                <div class="edit-icon" style="flex-shrink: 0; padding: 4px 0 0 12px;">
+              <div class="d-flex gap-2 h-100" style="align-items: flex-start;">
+                <div class="edit-icon" style="flex-shrink: 0;">
                   <img
                     src="https://www.notion.so/icons/drafts_gray.svg?mode=light"
                     style="width: 24px"
@@ -251,8 +298,7 @@
                 </div>
               </div>
 
-              <!-- 下區塊：按鈕區，固定高度 -->
-              <div class="callout-button-area">
+              <div class="feedback-buttons d-flex justify-content-end">
                 <button class="btn btn-copy" onclick="copyFeedback()">
                   <i class="ph ph-copy me-1"></i>複製
                 </button>
@@ -270,66 +316,40 @@
                 <h2
                   class="d-flex justify-content-between align-items-end title title-success"
                 >
-                  <span><i class="ph-fill ph-star-four pe-1"></i>鼓勵區</span>
-                  <small>批改作業之外也要記得鼓勵同學做得好的地方喔！</small>
+                  <span><i class="ph-fill ph-triangle"></i>基礎條件</span>
                 </h2>
 
-                <table class="table table-borderless align-middle mt-3 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" style="width: 5%"></th>
-                      <th scope="col" style="width: 5%">分數</th>
-                      <th scope="col" style="width: 15%">批改項目</th>
-                      <th scope="col" style="width: 80%">回饋內容</th>
-                    </tr>
-                  </thead>
+                <table class="table table-borderless align-middle condition-group">
                   <tbody id="tbody-1"></tbody>
-                </table>
-              </div>
-              <div class="pt-5">
-                <h2
-                  class="d-flex justify-content-between align-items-end title title-danger"
-                >
-                  <span><i class="ph-fill ph-star-four pe-1"></i>基礎錯誤區</span>
-                  <small
-                    >此區項目為本週作業的核心重點，若犯了基礎錯誤，則表示學員的基礎不穩</small
-                  >
-                </h2>
-
-                <table class="table table-borderless align-middle mt-3 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" style="width: 5%"></th>
-                      <th scope="col" style="width: 5%">分數</th>
-                      <th scope="col" style="width: 15%">批改項目</th>
-                      <th scope="col" style="width: 80%">回饋內容</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody-2"></tbody>
                 </table>
               </div>
               <div class="pt-5">
                 <h2
                   class="d-flex justify-content-between align-items-end title title-warning"
                 >
-                  <span><i class="ph-fill ph-star-four pe-1"></i>進階錯誤區</span>
-                  <small
-                    >此區項目為 Nice to Have，若協助指出錯誤，可讓學員的 UI
-                    能力更加進步</small
-                  >
+                  <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
 
-                <table class="table table-borderless align-middle mt-3 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" style="width: 5%"></th>
-                      <th scope="col" style="width: 5%">分數</th>
-                      <th scope="col" style="width: 15%">批改項目</th>
-                      <th scope="col" style="width: 80%">回饋內容</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody-3"></tbody>
-                </table>
+                <div class="category-row">
+                  <span>批改項目類別</span>
+                  <button class="info-button">
+                    <i class="ph ph-info"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="pt-5">
+                <h2
+                  class="d-flex justify-content-between align-items-end title title-danger"
+                >
+                  <span><i class="ph ph-shapes"></i>挑戰條件</span>
+                </h2>
+
+                <div class="category-row">
+                  <span>批改項目類別</span>
+                  <button class="info-button">
+                    <i class="ph ph-info"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
