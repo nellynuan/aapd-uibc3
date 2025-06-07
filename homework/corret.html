@@ -94,6 +94,22 @@
         padding: 20px;
         height: 100%;
         overflow-y: auto;
+        box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .table-box::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .table-box::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .table-box::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 3px;
       }
 
       .title {
@@ -219,7 +235,7 @@
         align-items: center;
         justify-content: flex-start;
         font-size: 16px;
-        gap: 8px;
+        color: #AFB8C1;
       }
 
       .info-button {
@@ -233,6 +249,7 @@
         color: #AFB8C1;
         cursor: pointer;
         border-radius: 4px;
+        margin-left: 4px;
       }
 
       .info-button:hover {
@@ -241,6 +258,11 @@
 
       .info-button i {
         font-size: 20px;
+        transition: all 0.2s;
+      }
+
+      .info-button:hover i {
+        font-weight: 600;
       }
 
       .table-box h2 small {
@@ -412,10 +434,10 @@
                   <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
 
-                <div style="display: flex; align-items: center; justify-content: flex-start; font-size: 16px; gap: 8px; color: #6c757d; margin-top: 12px;">
+                <div class="category-row" style="margin-top: 12px;">
                   <span>批改項目類別</span>
-                  <button style="width: 32px; height: 32px; border: none; background: none; display: flex; align-items: center; justify-content: center; color: #AFB8C1; cursor: pointer; border-radius: 4px;">
-                    <i class="ph ph-info" style="font-size: 20px;"></i>
+                  <button class="info-button" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                    <i class="ph ph-info"></i>
                   </button>
                 </div>
               </div>
