@@ -139,10 +139,6 @@
         transition: background-color 0.2s;
       }
 
-      .condition-item:hover {
-        background-color: #f8f9fa;
-      }
-
       .condition-buttons {
         display: flex;
         gap: 8px;
@@ -152,33 +148,64 @@
       .condition-btn {
         width: 32px;
         height: 32px;
-        border: 2px solid #E5E7EB;
-        border-radius: 6px;
-        background: white;
+        border: 1px solid #D0D7DE;
+        border-radius: 4px;
+        background: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
-        font-size: 16px;
-        font-weight: 500;
       }
 
-      .condition-btn:hover {
-        border-color: #D1D5DB;
-        background-color: #F9FAFB;
+      .condition-btn i {
+        font-size: 20px;
       }
 
-      .condition-btn.active-correct {
-        border-color: #10B981;
-        background-color: #10B981;
-        color: white;
+      /* [O] 按鈕樣式 */
+      .condition-btn.correct-btn i {
+        color: #57AD57;
       }
 
-      .condition-btn.active-incorrect {
-        border-color: #EF4444;
-        background-color: #EF4444;
-        color: white;
+      .condition-btn.correct-btn:hover {
+        border-color: #BADEBA;
+        background-color: #EEF7EE;
+      }
+
+      .condition-btn.correct-btn:hover i {
+        color: #57AD57;
+      }
+
+      .condition-btn.correct-btn.active-correct {
+        border-color: #BADEBA;
+        background-color: #57AD57;
+      }
+
+      .condition-btn.correct-btn.active-correct i {
+        color: #FFFFFF;
+      }
+
+      /* [X] 按鈕樣式 */
+      .condition-btn.incorrect-btn i {
+        color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn:hover {
+        border-color: #F0BBA8;
+        background-color: #FBEEE9;
+      }
+
+      .condition-btn.incorrect-btn:hover i {
+        color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn.active-incorrect {
+        border-color: #F0BBA8;
+        background-color: #DF6B42;
+      }
+
+      .condition-btn.incorrect-btn.active-incorrect i {
+        color: #FFFFFF;
       }
 
       .condition-text {
@@ -496,8 +523,12 @@
             
             div.innerHTML = `
               <div class="condition-buttons">
-                <button class="condition-btn correct-btn" data-type="O">O</button>
-                <button class="condition-btn incorrect-btn" data-type="X">X</button>
+                <button class="condition-btn correct-btn" data-type="O">
+                  <i class="ph ph-circle"></i>
+                </button>
+                <button class="condition-btn incorrect-btn" data-type="X">
+                  <i class="ph ph-x"></i>
+                </button>
               </div>
               <div class="condition-text">${title}</div>
             `;
