@@ -335,7 +335,6 @@
         color: #AFB8C1;
         cursor: pointer;
         border-radius: 4px;
-        margin-left: 4px;
       }
 
       .info-button:hover {
@@ -350,7 +349,7 @@
       .category-items .condition-item {
         display: flex;
         align-items: center;
-        padding: 4px 0;
+        padding: 4px;
         margin-bottom: 4px;
         border-radius: 4px;
         cursor: pointer;
@@ -631,7 +630,7 @@
               itemDiv.dataset.category = category;
               itemDiv.dataset.item = item;
               itemDiv.innerHTML = `
-                <i class="ph ph-square" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
+                <i class="ph ph-circle" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
                 <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
                 <span style="flex: 1;">${item}</span>
               `;
@@ -648,26 +647,26 @@
       
       function handleCategoryItemClick(category, item, content, score, type, clickedDiv) {
         const icon = clickedDiv.querySelector("i");
-        const isSelected = icon.classList.contains("ph-check-square");
+        const isSelected = icon.classList.contains("ph-check-circle");
         
         if (isSelected) {
-          icon.classList.remove("ph-fill", "ph-check-square");
-          icon.classList.add("ph", "ph-square");
+          icon.classList.remove("ph-fill", "ph-check-circle");
+          icon.classList.add("ph", "ph-circle");
           deleteItem(item, content, score, type);
         } else {
           const categoryItems = document.querySelectorAll(`[data-category="${category}"]`);
           categoryItems.forEach(div => {
             const otherIcon = div.querySelector("i");
-            if (otherIcon.classList.contains("ph-check-square")) {
-              otherIcon.classList.remove("ph-fill", "ph-check-square");
-              otherIcon.classList.add("ph", "ph-square");
+            if (otherIcon.classList.contains("ph-check-circle")) {
+              otherIcon.classList.remove("ph-fill", "ph-check-circle");
+              otherIcon.classList.add("ph", "ph-circle");
               const otherItem = div.dataset.item;
               feedbackList = feedbackList.filter(f => !(f.type === type && f.title === otherItem));
             }
           });
           
-          icon.classList.remove("ph", "ph-square");
-          icon.classList.add("ph-fill", "ph-check-square");
+          icon.classList.remove("ph", "ph-circle");
+          icon.classList.add("ph-fill", "ph-check-circle");
           addItem(item, content, score, type);
         }
         
