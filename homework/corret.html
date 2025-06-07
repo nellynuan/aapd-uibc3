@@ -253,16 +253,12 @@
       }
 
       .info-button:hover {
-        background-color: rgba(175, 184, 193, 0.1);
+        background-color: transparent;
       }
 
       .info-button i {
         font-size: 20px;
         transition: all 0.2s;
-      }
-
-      .info-button:hover i {
-        font-weight: 600;
       }
 
       .table-box h2 small {
@@ -434,12 +430,7 @@
                   <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
 
-                <div class="category-row" style="margin-top: 12px;">
-                  <span>批改項目類別</span>
-                  <button class="info-button" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
-                    <i class="ph ph-info"></i>
-                  </button>
-                </div>
+                <div id="advanced-conditions"></div>
               </div>
               <div class="pt-4">
                 <h2
@@ -448,12 +439,7 @@
                   <span><i class="ph ph-shapes"></i>挑戰條件</span>
                 </h2>
 
-                <div style="display: flex; align-items: center; justify-content: flex-start; font-size: 16px; gap: 8px; color: #6c757d; margin-top: 12px;">
-                  <span>批改項目類別</span>
-                  <button style="width: 32px; height: 32px; border: none; background: none; display: flex; align-items: center; justify-content: center; color: #AFB8C1; cursor: pointer; border-radius: 4px;">
-                    <i class="ph ph-info" style="font-size: 20px;"></i>
-                  </button>
-                </div>
+                <div id="challenge-conditions"></div>
               </div>
             </div>
           </div>
@@ -503,9 +489,8 @@
           openingText = data.opening;
           closingText = data.closing;
           createButtons(data.praiseData, "tbody-1", "praise");
-          // 進階和挑戰條件已改為單列顯示，不需要生成表格
-          // createButtons(data.baseDeductData, "tbody-2", "base");
-          // createButtons(data.advDeductData, "tbody-3", "adv");
+          createButtons(data.baseDeductData, "tbody-2", "base");
+          createButtons(data.advDeductData, "tbody-3", "adv");
           updateFeedbackArea();
           Swal.close();
         })
@@ -514,30 +499,28 @@
         });
 
       let originalOrder = []; // 儲存原始順序
+      let categoryData = {}; // 儲存類別資料（用於 tooltips）
       
       function createButtons(items, containerId, type) {
         console.log(items);
         
         if (type === "praise") {
-          // 基礎條件：使用新的 [O] [X] 按鈕結構
+          // 基礎條件：[批改項目, 項目類別說明, 回饋內容, 結果(O/X)]
           const container = document.getElementById("condition-group-1");
           
-          // 將資料按批改項目分組，每個項目會有 O 和 X 兩種回饋
           const groupedItems = {};
-          const itemOrder = []; // 記錄項目順序
+          const itemOrder = [];
           
-          items.forEach(([title, content, result]) => {
+          items.forEach(([title, description, content, result]) => {
             if (!groupedItems[title]) {
-              groupedItems[title] = {};
-              itemOrder.push(title); // 記錄第一次出現的順序
+              groupedItems[title] = { description: description };
+              itemOrder.push(title);
             }
             groupedItems[title][result] = content;
           });
           
-          // 儲存基礎條件的原始順序
           originalOrder = itemOrder;
           
-          // 為每個批改項目創建 UI
           itemOrder.forEach(title => {
             const div = document.createElement("div");
             div.className = "condition-item";
@@ -553,9 +536,11 @@
                 </button>
               </div>
               <div class="condition-text">${title}</div>
+              <button class="info-button" title="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                <i class="ph ph-info"></i>
+              </button>
             `;
             
-            // 為按鈕添加點擊事件
             const correctBtn = div.querySelector('.correct-btn');
             const incorrectBtn = div.querySelector('.incorrect-btn');
             
@@ -571,8 +556,77 @@
             
             container.appendChild(div);
           });
-        } else {
-          // 其他條件保持原有邏輯（目前暫不處理）
+          
+        } else if (type === "base" || type === "adv") {
+          // 進階/挑戰條件：[項目類別, 項目類別說明, 批改項目, 回饋內容, 分數]
+          const targetDiv = type === "base" ? "advanced-conditions" : "challenge-conditions";
+          
+          // 按類別分組
+          const categorizedItems = {};
+          items.forEach(([category, categoryDesc, item, content, score]) => {
+            if (!categorizedItems[category]) {
+              categorizedItems[category] = {
+                description: categoryDesc,
+                items: []
+              };
+            }
+            categorizedItems[category].items.push([item, content, score]);
+          });
+          
+          // 為每個類別生成 UI
+          Object.keys(categorizedItems).forEach(category => {
+            const categoryData = categorizedItems[category];
+            
+            // 創建類別標題
+            const categoryDiv = document.createElement("div");
+            categoryDiv.className = "category-section";
+            categoryDiv.innerHTML = `
+              <div class="category-row" style="margin-top: 12px;">
+                <span>${category}</span>
+                <button class="info-button" title="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                  <i class="ph ph-info"></i>
+                </button>
+              </div>
+              <div class="category-items" id="${targetDiv}-${category.replace(/\s+/g, '-')}"></div>
+            `;
+            
+            // 將類別添加到對應區域
+            const targetElement = document.querySelector(`#${targetDiv}`);
+            if (targetElement) {
+              targetElement.appendChild(categoryDiv);
+            }
+            
+            // 為該類別下的項目創建 checkbox
+            const itemsContainer = categoryDiv.querySelector('.category-items');
+            categoryData.items.forEach(([item, content, score]) => {
+              const itemDiv = document.createElement("div");
+              itemDiv.className = "condition-item";
+              itemDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <i class="ph ph-square" style="font-size: 24px;"></i>
+                  <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
+                  <span style="flex: 1;">${item}</span>
+                </div>
+              `;
+              
+              itemDiv.onclick = () => {
+                const icon = itemDiv.querySelector("i");
+                const isSelected = icon.classList.contains("ph-check-square");
+                
+                if (isSelected) {
+                  icon.classList.remove("ph-fill", "ph-check-square");
+                  icon.classList.add("ph", "ph-square");
+                  deleteItem(item, content, score, type);
+                } else {
+                  icon.classList.remove("ph", "ph-square");
+                  icon.classList.add("ph-fill", "ph-check-square");
+                  addItem(item, content, score, type);
+                }
+              };
+              
+              itemsContainer.appendChild(itemDiv);
+            });
+          });
         }
       }
       
