@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+.condition-text {
+        flex: 1;
+        font-size: 16px;
+        color: #374151;
+        padding: 8px 0;
+        line-height: 1.5;
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .callout h3 {
+        font-size: 20px;
+      }<!DOCTYPE html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
@@ -602,11 +615,9 @@
               const itemDiv = document.createElement("div");
               itemDiv.className = "condition-item";
               itemDiv.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                  <i class="ph ph-square" style="font-size: 24px;"></i>
-                  <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
-                  <span style="flex: 1;">${item}</span>
-                </div>
+                <i class="ph ph-square" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
+                <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
+                <span style="flex: 1;">${item}</span>
               `;
               
               itemDiv.onclick = () => {
@@ -622,6 +633,7 @@
                   icon.classList.add("ph-fill", "ph-check-square");
                   addItem(item, content, score, type);
                 }
+                updateFeedbackArea(); // 更新 callout 內容
               };
               
               itemsContainer.appendChild(itemDiv);
@@ -688,15 +700,34 @@
           });
         }
         
-        // 其他條件保持原有邏輯
-        const otherConditions = feedbackList
-          .filter((f) => f.type !== "praise")
+        // 進階條件
+        const advancedConditions = feedbackList
+          .filter((f) => f.type === "base")
           .map((f) => f.content);
         
-        const good = orderedBasicConditions.length > 0 ? orderedBasicConditions.join("\n\n") : "- ";
-        const better = otherConditions.length > 0 ? otherConditions.join("\n\n") : "- ";
+        // 挑戰條件
+        const challengeConditions = feedbackList
+          .filter((f) => f.type === "adv")
+          .map((f) => f.content);
         
-        md = `${openingText}\n\n### 基礎條件\n${good}\n\n### 進階條件\n\n### 挑戰條件\n\n${closingText}`;
+        const basic = orderedBasicConditions.length > 0 ? orderedBasicConditions.join("\n\n") : "- ";
+        const advanced = advancedConditions.length > 0 ? advancedConditions.join("\n\n") : "";
+        const challenge = challengeConditions.length > 0 ? challengeConditions.join("\n\n") : "";
+        
+        // 組合 markdown，只有有內容的類別才顯示
+        let feedbackContent = `${openingText}\n\n### 基礎條件\n${basic}`;
+        
+        if (advanced) {
+          feedbackContent += `\n\n### 進階條件\n${advanced}`;
+        }
+        
+        if (challenge) {
+          feedbackContent += `\n\n### 挑戰條件\n${challenge}`;
+        }
+        
+        feedbackContent += `\n\n${closingText}`;
+        
+        md = feedbackContent;
         document.getElementById("previewArea").innerHTML = marked.parse(md);
       }
 
