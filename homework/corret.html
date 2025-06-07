@@ -262,7 +262,7 @@
             </div>
           </div>
           <div class="top-right">
-            <div class="d-flex gap-3 h-100 align-items-center">
+            <div class="d-flex gap-3 h-100 align-items-end">
               <div class="content-box w-100">
                 <div class="content">
                   這份作業在「基礎錯誤」項目有被扣分，因此作業評級為「有待加強」
@@ -330,17 +330,12 @@
                   <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
 
-                <table class="table table-borderless align-middle mt-3 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" style="width: 5%"></th>
-                      <th scope="col" style="width: 5%">分數</th>
-                      <th scope="col" style="width: 15%">批改項目</th>
-                      <th scope="col" style="width: 80%">回饋內容</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody-2"></tbody>
-                </table>
+                <div style="display: flex; align-items: center; justify-content: flex-start; font-size: 16px; gap: 8px; color: #6c757d; margin-top: 12px;">
+                  <span>批改項目類別</span>
+                  <button style="width: 32px; height: 32px; border: none; background: none; display: flex; align-items: center; justify-content: center; color: #AFB8C1; cursor: pointer; border-radius: 4px;">
+                    <i class="ph ph-info" style="font-size: 20px;"></i>
+                  </button>
+                </div>
               </div>
               <div class="pt-5">
                 <h2
@@ -349,17 +344,12 @@
                   <span><i class="ph ph-shapes"></i>挑戰條件</span>
                 </h2>
 
-                <table class="table table-borderless align-middle mt-3 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" style="width: 5%"></th>
-                      <th scope="col" style="width: 5%">分數</th>
-                      <th scope="col" style="width: 15%">批改項目</th>
-                      <th scope="col" style="width: 80%">回饋內容</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody-3"></tbody>
-                </table>
+                <div style="display: flex; align-items: center; justify-content: flex-start; font-size: 16px; gap: 8px; color: #6c757d; margin-top: 12px;">
+                  <span>批改項目類別</span>
+                  <button style="width: 32px; height: 32px; border: none; background: none; display: flex; align-items: center; justify-content: center; color: #AFB8C1; cursor: pointer; border-radius: 4px;">
+                    <i class="ph ph-info" style="font-size: 20px;"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -409,8 +399,9 @@
           openingText = data.opening;
           closingText = data.closing;
           createButtons(data.praiseData, "tbody-1", "praise");
-          createButtons(data.baseDeductData, "tbody-2", "base");
-          createButtons(data.advDeductData, "tbody-3", "adv");
+          // 進階和挑戰條件已改為單列顯示，不需要生成表格
+          // createButtons(data.baseDeductData, "tbody-2", "base");
+          // createButtons(data.advDeductData, "tbody-3", "adv");
           updateFeedbackArea();
           Swal.close();
         })
