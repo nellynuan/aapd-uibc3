@@ -464,6 +464,8 @@
           alert("發生錯誤 " + error);
         });
 
+      let originalOrder = []; // 儲存原始順序
+      
       function createButtons(items, containerId, type) {
         console.log(items);
         
@@ -473,15 +475,21 @@
           
           // 將資料按批改項目分組，每個項目會有 O 和 X 兩種回饋
           const groupedItems = {};
+          const itemOrder = []; // 記錄項目順序
+          
           items.forEach(([title, content, result]) => {
             if (!groupedItems[title]) {
               groupedItems[title] = {};
+              itemOrder.push(title); // 記錄第一次出現的順序
             }
             groupedItems[title][result] = content;
           });
           
+          // 儲存基礎條件的原始順序
+          originalOrder = itemOrder;
+          
           // 為每個批改項目創建 UI
-          Object.keys(groupedItems).forEach(title => {
+          itemOrder.forEach(title => {
             const div = document.createElement("div");
             div.className = "condition-item";
             div.dataset.title = title;
@@ -561,17 +569,27 @@
 
       function updateFeedbackArea() {
         console.log(feedbackList);
-        const good =
-          feedbackList
-            .filter((f) => f.type === "praise")
-            .map((f) => f.content)
-            .join("\n\n") || "- ";
-        const better =
-          feedbackList
-            .filter((f) => f.type !== "praise")
-            .map((f) => f.content)
-            .join("\n\n") || "- ";
-        md = `${openingText}\n\n### 做得好的地方\n${good}\n\n### 可以再更好的地方\n${better}\n\n${closingText}`;
+        
+        // 基礎條件按照原始順序排列
+        const orderedBasicConditions = [];
+        if (originalOrder.length > 0) {
+          originalOrder.forEach(title => {
+            const item = feedbackList.find(f => f.type === "praise" && f.title === title);
+            if (item) {
+              orderedBasicConditions.push(item.content);
+            }
+          });
+        }
+        
+        // 其他條件保持原有邏輯
+        const otherConditions = feedbackList
+          .filter((f) => f.type !== "praise")
+          .map((f) => f.content);
+        
+        const good = orderedBasicConditions.length > 0 ? orderedBasicConditions.join("\n\n") : "- ";
+        const better = otherConditions.length > 0 ? otherConditions.join("\n\n") : "- ";
+        
+        md = `${openingText}\n\n### 基礎條件\n${good}\n\n### 進階條件\n\n### 挑戰條件\n\n${closingText}`;
         document.getElementById("previewArea").innerHTML = marked.parse(md);
       }
 
