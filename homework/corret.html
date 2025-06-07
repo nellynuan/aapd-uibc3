@@ -234,7 +234,7 @@
         margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         transition: background-color 0.2s;
       }
 
@@ -368,6 +368,32 @@
 
       #previewArea h3 {
         font-size: 20px;
+      }
+
+      .copy-toast {
+        position: absolute;
+        top: -50px;
+        right: 0;
+        background: #2A2A3A;
+        color: white;
+        padding: 12px;
+        border-radius: 4px;
+        font-size: 16px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 1000;
+      }
+
+      .copy-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .btn-copy {
+        position: relative;
       }
     </style>
   </head>
@@ -769,20 +795,40 @@
         navigator.clipboard
           .writeText(md)
           .then(() => {
-            Swal.fire({
-              icon: "success",
-              title: "已複製",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            showCopyToast();
           })
           .catch((err) => {
-            Swal.fire({
-              title: "複製失敗",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            alert("複製失敗");
           });
+      }
+
+      function showCopyToast() {
+        const copyBtn = document.querySelector('.btn-copy');
+        
+        // 移除已存在的 toast
+        const existingToast = copyBtn.querySelector('.copy-toast');
+        if (existingToast) {
+          existingToast.remove();
+        }
+        
+        // 創建新的 toast
+        const toast = document.createElement('div');
+        toast.className = 'copy-toast';
+        toast.textContent = '已複製';
+        copyBtn.appendChild(toast);
+        
+        // 顯示動畫
+        setTimeout(() => {
+          toast.classList.add('show');
+        }, 10);
+        
+        // 3秒後隱藏並移除
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 3000);
       }
 
       function clearFeedback() {
