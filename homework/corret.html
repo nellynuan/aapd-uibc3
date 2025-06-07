@@ -128,8 +128,63 @@
         padding-top: 8px;
       }
 
-      .condition-group tr {
+      .condition-item {
         margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+      }
+
+      .condition-item:hover {
+        background-color: #f8f9fa;
+      }
+
+      .condition-buttons {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .condition-btn {
+        width: 32px;
+        height: 32px;
+        border: 2px solid #E5E7EB;
+        border-radius: 6px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .condition-btn:hover {
+        border-color: #D1D5DB;
+        background-color: #F9FAFB;
+      }
+
+      .condition-btn.active-correct {
+        border-color: #10B981;
+        background-color: #10B981;
+        color: white;
+      }
+
+      .condition-btn.active-incorrect {
+        border-color: #EF4444;
+        background-color: #EF4444;
+        color: white;
+      }
+
+      .condition-text {
+        flex: 1;
+        font-size: 16px;
+        color: #374151;
       }
 
       .category-row {
@@ -319,9 +374,9 @@
                   <span><i class="ph-fill ph-triangle"></i>基礎條件</span>
                 </h2>
 
-                <table class="table table-borderless align-middle condition-group">
-                  <tbody id="tbody-1"></tbody>
-                </table>
+                <div class="condition-group" id="condition-group-1">
+                  <!-- 基礎條件項目會動態生成在這裡 -->
+                </div>
               </div>
               <div class="pt-5">
                 <h2
@@ -411,38 +466,79 @@
 
       function createButtons(items, containerId, type) {
         console.log(items);
-        items.forEach(([title, content, score]) => {
-          const tr = document.createElement("tr");
-          const isSelected = feedbackList.some(
-            (i) => i.title === title && i.type === type
-          );
-          const iconClass = isSelected ? "ph-fill ph-check-square" : "ph ph-square";
-          tr.innerHTML = `
-          <td style="text-align: center;"><i class="${iconClass}"></i></td>
-          <td>${score > 0 ? "+" + score : score}</td>
-          <td>${title}</td>
-          <td>${content}</td>
-        `;
-          tr.onclick = () => {
-            const icon = tr.querySelector("td i");
-
-            if (icon.classList.contains("ph-check-square")) {
-              icon.classList.remove("ph-fill");
-              icon.classList.remove("ph-check-square");
-              icon.classList.add("ph");
-              icon.classList.add("ph-square");
-              deleteItem(title, content, score, type);
-            } else {
-              icon.classList.remove("ph");
-              icon.classList.remove("ph-square");
-              icon.classList.add("ph-fill");
-              icon.classList.add("ph-check-square");
-              addItem(title, content, score, type);
+        
+        if (type === "praise") {
+          // 基礎條件：使用新的 [O] [X] 按鈕結構
+          const container = document.getElementById("condition-group-1");
+          
+          // 將資料按批改項目分組，每個項目會有 O 和 X 兩種回饋
+          const groupedItems = {};
+          items.forEach(([title, content, result]) => {
+            if (!groupedItems[title]) {
+              groupedItems[title] = {};
             }
-          };
-          const tbody = document.getElementById(containerId);
-          tbody.appendChild(tr);
-        });
+            groupedItems[title][result] = content;
+          });
+          
+          // 為每個批改項目創建 UI
+          Object.keys(groupedItems).forEach(title => {
+            const div = document.createElement("div");
+            div.className = "condition-item";
+            div.dataset.title = title;
+            
+            div.innerHTML = `
+              <div class="condition-buttons">
+                <button class="condition-btn correct-btn" data-type="O">O</button>
+                <button class="condition-btn incorrect-btn" data-type="X">X</button>
+              </div>
+              <div class="condition-text">${title}</div>
+            `;
+            
+            // 為按鈕添加點擊事件
+            const correctBtn = div.querySelector('.correct-btn');
+            const incorrectBtn = div.querySelector('.incorrect-btn');
+            
+            correctBtn.onclick = (e) => {
+              e.stopPropagation();
+              handleConditionClick(title, 'O', groupedItems[title]['O'], correctBtn, incorrectBtn, type);
+            };
+            
+            incorrectBtn.onclick = (e) => {
+              e.stopPropagation();
+              handleConditionClick(title, 'X', groupedItems[title]['X'], incorrectBtn, correctBtn, type);
+            };
+            
+            container.appendChild(div);
+          });
+        } else {
+          // 其他條件保持原有邏輯（目前暫不處理）
+        }
+      }
+      
+      function handleConditionClick(title, result, content, activeBtn, otherBtn, type) {
+        // 移除其他按鈕的 active 狀態
+        otherBtn.classList.remove('active-correct', 'active-incorrect');
+        
+        // 檢查當前按鈕是否已經是 active
+        const isCurrentlyActive = activeBtn.classList.contains('active-correct') || 
+                                 activeBtn.classList.contains('active-incorrect');
+        
+        if (isCurrentlyActive) {
+          // 如果已經是 active，則取消選擇
+          activeBtn.classList.remove('active-correct', 'active-incorrect');
+          deleteItem(title, content, 0, type);
+        } else {
+          // 設置當前按鈕為 active
+          if (result === 'O') {
+            activeBtn.classList.add('active-correct');
+          } else {
+            activeBtn.classList.add('active-incorrect');
+          }
+          
+          // 先移除該項目的舊記錄，再添加新記錄
+          feedbackList = feedbackList.filter(item => item.title !== title);
+          addItem(title, content, 0, type);
+        }
       }
 
       function addItem(title, content, score, type) {
