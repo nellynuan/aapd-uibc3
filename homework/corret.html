@@ -187,7 +187,7 @@
 
       /* Bootstrap tooltip 自訂樣式 */
       .tooltip-inner {
-        max-width: 400px !important;
+        max-width: 300px !important;
         width: max-content;
       }
 
@@ -223,6 +223,17 @@
 
       .btn-copy {
         position: relative;
+      }
+
+      .btn-copy:focus,
+      .btn-clear:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
+      /* 保持換行格式 */
+      #previewArea {
+        white-space: pre-line;
       }
 
       .table-box::-webkit-scrollbar {
