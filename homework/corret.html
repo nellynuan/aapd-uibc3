@@ -30,12 +30,15 @@
       }
 
       /* 響應式設計 */
+      /* 預設隱藏所有訊息和主要內容 */
+      .mobile-message,
+      .tablet-message,
+      .main-content {
+        display: none;
+      }
+
       /* 小於 420px */
       @media (max-width: 419px) {
-        .main-content {
-          display: none;
-        }
-        
         .mobile-message {
           display: flex;
           align-items: center;
@@ -50,10 +53,6 @@
 
       /* 420px 到 849px */
       @media (min-width: 420px) and (max-width: 849px) {
-        .main-content {
-          display: none;
-        }
-        
         .tablet-message {
           display: flex;
           align-items: center;
@@ -70,11 +69,6 @@
       @media (min-width: 850px) {
         .main-content {
           display: flex;
-        }
-        
-        .mobile-message,
-        .tablet-message {
-          display: none;
         }
       }
 
@@ -100,17 +94,8 @@
 
       /* xl: 1200px+ */
       @media (min-width: 1200px) {
-        .container {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        
         .top-section .d-flex {
           gap: 16px;
-        }
-        
-        .top-right .d-flex {
-          gap: 8px;
         }
         
         .top-right {
