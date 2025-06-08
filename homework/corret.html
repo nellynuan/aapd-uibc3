@@ -202,7 +202,14 @@
       #incompleteModal .modal-body {
         text-align: center;
         padding-top: 0;
-        padding-bottom: 24px;
+        padding-bottom: 16px;
+      }
+
+      #incompleteModal .modal-body img {
+        margin-top: 16px;
+        margin-bottom: 24px;
+        width: 200px;
+        border-radius: 8px;
       }
 
       #incompleteModal .modal-footer {
@@ -225,15 +232,11 @@
         position: relative;
       }
 
+      .btn:focus,
       .btn-copy:focus,
       .btn-clear:focus {
         outline: none !important;
         box-shadow: none !important;
-      }
-
-      /* 保持換行格式 */
-      #previewArea {
-        white-space: pre-line;
       }
 
       .table-box::-webkit-scrollbar {
@@ -665,11 +668,12 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="incompleteModalLabel">基礎條件尚未批改完</h5>
+            <h5 class="modal-title" id="incompleteModalLabel">修但幾勒</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             還有「基礎條件」沒有批改完成，再檢查一下喔！
+            <img src="https://scontent.ftpe7-2.fna.fbcdn.net/v/t39.30808-6/471303619_10231175542870148_2440793267832562341_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=tKW0VMW_BU0Q7kNvwGKxRDP&_nc_oc=AdlS99lfZRhSSn0Wma8KTLHBg8kN0wwj6nT8tocSRZR_Tzdu569NiTsK5m_GNUzupR57k1-IcdXWUP3wy3bGgaOS&_nc_zt=23&_nc_ht=scontent.ftpe7-2.fna&_nc_gid=Klf05YcoIqCIIKbSWFZ5Cw&oh=00_AfP_RzgutrwUzPu6WAlldszGhM3yToDLa6nRurd6Gdjvow&oe=684AF1B1" alt="修但幾勒">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">好的</button>
