@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>作業批改回饋區</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -335,6 +334,7 @@
         color: #AFB8C1;
         cursor: pointer;
         border-radius: 4px;
+        position: relative;
       }
 
       .info-button:hover {
@@ -344,6 +344,48 @@
       .info-button i {
         font-size: 20px;
         transition: all 0.2s;
+      }
+
+      .info-button::before {
+        content: attr(title);
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        background: #2A2A3A;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        max-width: 300px;
+        white-space: normal;
+        line-height: 1.4;
+      }
+
+      .info-button::after {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        right: 8px;
+        border: 6px solid transparent;
+        border-top-color: #2A2A3A;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px);
+        transition: all 0.3s ease;
+        z-index: 1001;
+      }
+
+      .info-button:hover::before,
+      .info-button:hover::after {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
       }
 
       .category-items .condition-item {
@@ -404,8 +446,8 @@
           <div class="top-left">
             <div class="p-3">
               <h1 class="section-title">
-                助教 <span id="ta_text"></span> 的
-                <span id="work_text"></span> 作業批改區
+                助教 <span id="ta_text">Demo助教</span> 的
+                <span id="work_text">Week1</span> 作業批改區
               </h1>
               <ol class="section-text mt-3">
                 <li>記得檢查是否有更新作業小卡上「繳交狀態」、「批改狀態」、「批改班長」的欄位</li>
@@ -444,7 +486,13 @@
                   />
                 </div>
                 <div class="feedback-content">
-                  <div id="previewArea"></div>
+                  <div id="previewArea">
+                    <p>哈囉 @OOO，我是班長大雄！準時繳交第一週作業辛苦了！💗</p>
+                    <p>以下將根據作業標準進行回饋：</p>
+                    <h3>基礎條件</h3>
+                    <p>- </p>
+                    <p>期待再收到你講讀的作業 💗</p>
+                  </div>
                 </div>
               </div>
 
@@ -469,7 +517,50 @@
                 </h2>
 
                 <div class="condition-group" id="condition-group-1">
-                  <!-- 基礎條件項目會動態生成在這裡 -->
+                  <div class="condition-item" data-title="畫面設計完成">
+                    <div class="condition-buttons">
+                      <button class="condition-btn correct-btn" data-type="O">
+                        <i class="ph ph-circle"></i>
+                      </button>
+                      <button class="condition-btn incorrect-btn" data-type="X">
+                        <i class="ph ph-x"></i>
+                      </button>
+                    </div>
+                    <div class="condition-text">畫面設計完成</div>
+                    <button class="info-button" title="Desktop 和 Mobile 各完成一頁頁面，畫面中所有內容皆為完整實際內容，實際完善作品" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                      <i class="ph ph-info"></i>
+                    </button>
+                  </div>
+
+                  <div class="condition-item" data-title="品牌設計初步應用">
+                    <div class="condition-buttons">
+                      <button class="condition-btn correct-btn" data-type="O">
+                        <i class="ph ph-circle"></i>
+                      </button>
+                      <button class="condition-btn incorrect-btn" data-type="X">
+                        <i class="ph ph-x"></i>
+                      </button>
+                    </div>
+                    <div class="condition-text">品牌設計初步應用</div>
+                    <button class="info-button" title="使用繪製設計好的品牌色與 Logo，並套用於主要元件中">
+                      <i class="ph ph-info"></i>
+                    </button>
+                  </div>
+
+                  <div class="condition-item" data-title="Auto Layout 基礎使用">
+                    <div class="condition-buttons">
+                      <button class="condition-btn correct-btn" data-type="O">
+                        <i class="ph ph-circle"></i>
+                      </button>
+                      <button class="condition-btn incorrect-btn" data-type="X">
+                        <i class="ph ph-x"></i>
+                      </button>
+                    </div>
+                    <div class="condition-text">Auto Layout 基礎使用</div>
+                    <button class="info-button" title="至少於畫面中 1 個區域使用 Auto Layout，讓畫面可簡易容器">
+                      <i class="ph ph-info"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class="pt-4">
@@ -479,7 +570,23 @@
                   <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
 
-                <div id="advanced-conditions"></div>
+                <div id="advanced-conditions">
+                  <div class="category-section">
+                    <div class="category-row" style="margin-top: 12px;">
+                      <span>自訂品牌精神</span>
+                      <button class="info-button" title="自行定義品牌色與 Logo，並說明設計">
+                        <i class="ph ph-info"></i>
+                      </button>
+                    </div>
+                    <div class="category-items">
+                      <div class="condition-item" data-category="自訂品牌精神" data-item="自行建立品牌色彩 Logo">
+                        <i class="ph ph-circle" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
+                        <span style="margin-right: 8px;">+1</span>
+                        <span style="flex: 1;">自行建立品牌色彩 Logo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="pt-4">
                 <h2
@@ -488,7 +595,23 @@
                   <span><i class="ph ph-shapes"></i>挑戰條件</span>
                 </h2>
 
-                <div id="challenge-conditions"></div>
+                <div id="challenge-conditions">
+                  <div class="category-section">
+                    <div class="category-row" style="margin-top: 12px;">
+                      <span>設計樣式一致性</span>
+                      <button class="info-button" title="在所有元件中使用單一元素的一致性設計">
+                        <i class="ph ph-info"></i>
+                      </button>
+                    </div>
+                    <div class="category-items">
+                      <div class="condition-item" data-category="設計樣式一致性" data-item="設計到產品本身一致">
+                        <i class="ph ph-circle" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
+                        <span style="margin-right: 8px;">+1</span>
+                        <span style="flex: 1;">設計到產品本身一致</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -498,179 +621,31 @@
 
     <script>
       let totalScore = 0;
-      let openingText = "";
-      let closingText = "";
+      let openingText = "哈囉 @OOO，我是班長大雄！準時繳交第一週作業辛苦了！💗\n\n以下將根據作業標準進行回饋：";
+      let closingText = "期待再收到你講讀的作業 💗";
       let md = "";
       let feedbackList = [];
-      let originalOrder = [];
-      let originalOrderAdvanced = {};
-      let originalOrderChallenge = {};
 
-      const api = {
-        Week1:
-          "https://script.google.com/macros/s/AKfycbyxa9E3B32vr1aYXVGWttrUdPtS7huVZOU30r_surMb-R500rRD0DbZzofVWfXogPpt/exec",
-        Week2:
-          "https://script.google.com/macros/s/AKfycbxBsdr6vJEia049Y-yymZdJZRqJr9F7a80i6PQTya-GkQITqIlxHhF_l5paa8IlvxI/exec",
-        Week3:
-          "https://script.google.com/macros/s/AKfycbxC-CfDsxOeWGmbiEIFoN248cZKVtCHBXb9fMKkOlF7VhDHgXFsTf0iyaJ2vZqt6d7WbQ/exec",
-      };
-
-      const params = new URLSearchParams(window.location.search);
-      const work = params.get("work");
-      const ta = params.get("ta");
-      document.getElementById("ta_text").innerText = ta;
-      document.getElementById("work_text").innerText = work;
-
-      Swal.fire({
-        title: "改完作業要記得休息喔！",
-        text: "資料比較多，給它一點時間...",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
-
-      fetch(api[work] + "?ta=" + ta)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          openingText = data.opening;
-          closingText = data.closing;
-          createButtons(data.praiseData, "tbody-1", "praise");
-          createButtons(data.baseDeductData, "tbody-2", "base");
-          createButtons(data.advDeductData, "tbody-3", "adv");
-          updateFeedbackArea();
-          Swal.close();
-        })
-        .catch((error) => {
-          alert("發生錯誤 " + error);
-        });
-
-      function createButtons(items, containerId, type) {
-        console.log(items);
+      function handleConditionClick(title, result, content, activeBtn, otherBtn, type) {
+        otherBtn.classList.remove('active-correct', 'active-incorrect');
         
-        if (type === "praise") {
-          const container = document.getElementById("condition-group-1");
-          
-          const groupedItems = {};
-          const itemOrder = [];
-          
-          items.forEach(([title, description, content, result]) => {
-            if (!groupedItems[title]) {
-              groupedItems[title] = { description: description };
-              itemOrder.push(title);
-            }
-            groupedItems[title][result] = content;
-          });
-          
-          originalOrder = itemOrder;
-          
-          itemOrder.forEach(title => {
-            const div = document.createElement("div");
-            div.className = "condition-item";
-            div.dataset.title = title;
-            
-            div.innerHTML = `
-              <div class="condition-buttons">
-                <button class="condition-btn correct-btn" data-type="O">
-                  <i class="ph ph-circle"></i>
-                </button>
-                <button class="condition-btn incorrect-btn" data-type="X">
-                  <i class="ph ph-x"></i>
-                </button>
-              </div>
-              <div class="condition-text">${title}</div>
-              <button class="info-button" title="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
-                <i class="ph ph-info"></i>
-              </button>
-            `;
-            
-            const correctBtn = div.querySelector('.correct-btn');
-            const incorrectBtn = div.querySelector('.incorrect-btn');
-            
-            correctBtn.onclick = (e) => {
-              e.stopPropagation();
-              handleConditionClick(title, 'O', groupedItems[title]['O'], correctBtn, incorrectBtn, type);
-            };
-            
-            incorrectBtn.onclick = (e) => {
-              e.stopPropagation();
-              handleConditionClick(title, 'X', groupedItems[title]['X'], incorrectBtn, correctBtn, type);
-            };
-            
-            container.appendChild(div);
-          });
-          
-        } else if (type === "base" || type === "adv") {
-          const targetDiv = type === "base" ? "advanced-conditions" : "challenge-conditions";
-          
-          const categorizedItems = {};
-          const categoryOrder = {};
-          
-          items.forEach(([category, categoryDesc, item, content, score]) => {
-            if (!categorizedItems[category]) {
-              categorizedItems[category] = {
-                description: categoryDesc,
-                items: []
-              };
-              categoryOrder[category] = [];
-            }
-            categorizedItems[category].items.push([item, content, score]);
-            categoryOrder[category].push(item);
-          });
-          
-          if (type === "base") {
-            originalOrderAdvanced = categoryOrder;
+        const isCurrentlyActive = activeBtn.classList.contains('active-correct') || 
+                                 activeBtn.classList.contains('active-incorrect');
+        
+        if (isCurrentlyActive) {
+          activeBtn.classList.remove('active-correct', 'active-incorrect');
+          deleteItem(title, content, 0, type);
+        } else {
+          if (result === 'O') {
+            activeBtn.classList.add('active-correct');
+            addItem(title, "畫面設計完成很棒", 0, type);
           } else {
-            originalOrderChallenge = categoryOrder;
+            activeBtn.classList.add('active-incorrect');
+            addItem(title, "畫面設計沒有設計完成理由？？", 0, type);
           }
-          
-          Object.keys(categorizedItems).forEach(category => {
-            const categoryData = categorizedItems[category];
-            
-            const categoryDiv = document.createElement("div");
-            categoryDiv.className = "category-section";
-            categoryDiv.innerHTML = `
-              <div class="category-row" style="margin-top: 12px;">
-                <span>${category}</span>
-                <button class="info-button" title="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
-                  <i class="ph ph-info"></i>
-                </button>
-              </div>
-              <div class="category-items" id="${targetDiv}-${category.replace(/\s+/g, '-')}"></div>
-            `;
-            
-            const targetElement = document.querySelector(`#${targetDiv}`);
-            if (targetElement) {
-              targetElement.appendChild(categoryDiv);
-            }
-            
-            const itemsContainer = categoryDiv.querySelector('.category-items');
-            categoryData.items.forEach(([item, content, score]) => {
-              const itemDiv = document.createElement("div");
-              itemDiv.className = "condition-item";
-              itemDiv.dataset.category = category;
-              itemDiv.dataset.item = item;
-              itemDiv.innerHTML = `
-                <i class="ph ph-circle" style="font-size: 24px; color: #6E7781; margin-right: 8px;"></i>
-                <span style="margin-right: 8px;">${score > 0 ? '+' + score : score}</span>
-                <span style="flex: 1;">${item}</span>
-              `;
-              
-              itemDiv.onclick = () => {
-                handleCategoryItemClick(category, item, content, score, type, itemDiv);
-              };
-              
-              itemsContainer.appendChild(itemDiv);
-            });
-          });
         }
       }
-      
+
       function handleCategoryItemClick(category, item, content, score, type, clickedDiv) {
         const icon = clickedDiv.querySelector("i");
         const isSelected = icon.classList.contains("ph-check-circle");
@@ -693,32 +668,53 @@
           
           icon.classList.remove("ph", "ph-circle");
           icon.classList.add("ph-fill", "ph-check-circle");
-          addItem(item, content, score, type);
+          addItem(item, "(回饋內容) 自行建立品牌色彩 Logo", score, type);
         }
         
         updateFeedbackArea();
       }
-      
-      function handleConditionClick(title, result, content, activeBtn, otherBtn, type) {
-        otherBtn.classList.remove('active-correct', 'active-incorrect');
-        
-        const isCurrentlyActive = activeBtn.classList.contains('active-correct') || 
-                                 activeBtn.classList.contains('active-incorrect');
-        
-        if (isCurrentlyActive) {
-          activeBtn.classList.remove('active-correct', 'active-incorrect');
-          deleteItem(title, content, 0, type);
-        } else {
-          if (result === 'O') {
-            activeBtn.classList.add('active-correct');
-          } else {
-            activeBtn.classList.add('active-incorrect');
-          }
+
+      // 為按鈕添加事件監聽器
+      document.addEventListener('DOMContentLoaded', function() {
+        // 基礎條件按鈕
+        const basicConditions = document.querySelectorAll('#condition-group-1 .condition-item');
+        basicConditions.forEach(item => {
+          const title = item.dataset.title;
+          const correctBtn = item.querySelector('.correct-btn');
+          const incorrectBtn = item.querySelector('.incorrect-btn');
           
-          feedbackList = feedbackList.filter(item => item.title !== title);
-          addItem(title, content, 0, type);
-        }
-      }
+          correctBtn.onclick = (e) => {
+            e.stopPropagation();
+            handleConditionClick(title, 'O', '', correctBtn, incorrectBtn, 'praise');
+          };
+          
+          incorrectBtn.onclick = (e) => {
+            e.stopPropagation();
+            handleConditionClick(title, 'X', '', incorrectBtn, correctBtn, 'praise');
+          };
+        });
+
+        // 進階和挑戰條件按鈕
+        const advancedItems = document.querySelectorAll('#advanced-conditions .condition-item');
+        advancedItems.forEach(item => {
+          const category = item.dataset.category;
+          const itemName = item.dataset.item;
+          item.onclick = () => {
+            handleCategoryItemClick(category, itemName, '', 1, 'base', item);
+          };
+        });
+
+        const challengeItems = document.querySelectorAll('#challenge-conditions .condition-item');
+        challengeItems.forEach(item => {
+          const category = item.dataset.category;
+          const itemName = item.dataset.item;
+          item.onclick = () => {
+            handleCategoryItemClick(category, itemName, '', 1, 'adv', item);
+          };
+        });
+
+        updateFeedbackArea();
+      });
 
       function addItem(title, content, score, type) {
         const item = {
@@ -739,41 +735,13 @@
       }
 
       function updateFeedbackArea() {
-        console.log(feedbackList);
+        const basicConditions = feedbackList.filter(f => f.type === "praise").map(f => f.content);
+        const advancedConditions = feedbackList.filter(f => f.type === "base").map(f => f.content);
+        const challengeConditions = feedbackList.filter(f => f.type === "adv").map(f => f.content);
         
-        const orderedBasicConditions = [];
-        if (originalOrder.length > 0) {
-          originalOrder.forEach(title => {
-            const item = feedbackList.find(f => f.type === "praise" && f.title === title);
-            if (item) {
-              orderedBasicConditions.push(item.content);
-            }
-          });
-        }
-        
-        const orderedAdvancedConditions = [];
-        Object.keys(originalOrderAdvanced).forEach(category => {
-          originalOrderAdvanced[category].forEach(itemTitle => {
-            const item = feedbackList.find(f => f.type === "base" && f.title === itemTitle);
-            if (item) {
-              orderedAdvancedConditions.push(item.content);
-            }
-          });
-        });
-        
-        const orderedChallengeConditions = [];
-        Object.keys(originalOrderChallenge).forEach(category => {
-          originalOrderChallenge[category].forEach(itemTitle => {
-            const item = feedbackList.find(f => f.type === "adv" && f.title === itemTitle);
-            if (item) {
-              orderedChallengeConditions.push(item.content);
-            }
-          });
-        });
-        
-        const basic = orderedBasicConditions.length > 0 ? orderedBasicConditions.join("\n\n") : "- ";
-        const advanced = orderedAdvancedConditions.length > 0 ? orderedAdvancedConditions.join("\n\n") : "";
-        const challenge = orderedChallengeConditions.length > 0 ? orderedChallengeConditions.join("\n\n") : "";
+        const basic = basicConditions.length > 0 ? basicConditions.join("\n\n") : "- ";
+        const advanced = advancedConditions.length > 0 ? advancedConditions.join("\n\n") : "";
+        const challenge = challengeConditions.length > 0 ? challengeConditions.join("\n\n") : "";
         
         let feedbackContent = `${openingText}\n\n### 基礎條件\n${basic}`;
         
@@ -833,18 +801,18 @@
 
       function clearFeedback() {
         feedbackList = [];
-        updateFeedbackArea();
-
-        const icons = document.querySelectorAll("tr i");
-
-        icons.forEach((icon) => {
-          if (icon.classList.contains("ph-check-square")) {
-            icon.classList.remove("ph-fill");
-            icon.classList.remove("ph-check-square");
-            icon.classList.add("ph");
-            icon.classList.add("ph-square");
-          }
+        
+        // 清除所有按鈕狀態
+        document.querySelectorAll('.condition-btn').forEach(btn => {
+          btn.classList.remove('active-correct', 'active-incorrect');
         });
+        
+        document.querySelectorAll('.category-items .condition-item i').forEach(icon => {
+          icon.classList.remove("ph-fill", "ph-check-circle");
+          icon.classList.add("ph", "ph-circle");
+        });
+        
+        updateFeedbackArea();
       }
     </script>
   </body>
