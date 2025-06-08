@@ -101,8 +101,9 @@
       }
 
       /* Bootstrap tooltip 自訂樣式 */
-      .tooltip {
+      .tooltip-inner {
         max-width: 400px !important;
+        width: max-content;
       }
 
       .table-box::-webkit-scrollbar {
@@ -503,6 +504,24 @@
       </div>
     </div>
 
+    <!-- Bootstrap Modal for incomplete conditions -->
+    <div class="modal fade" id="incompleteModal" tabindex="-1" aria-labelledby="incompleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="incompleteModalLabel">基礎條件尚未批改完</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            還有「基礎條件」沒有批改完成，再檢查一下喔！
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">好的</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       let totalScore = 0;
       let openingText = "";
@@ -808,6 +827,28 @@
       }
 
       function copyFeedback() {
+        // 檢查基礎條件是否都有被選擇
+        const basicConditionItems = document.querySelectorAll('#condition-group-1 .condition-item');
+        let hasUnselectedItems = false;
+        
+        basicConditionItems.forEach(item => {
+          const correctBtn = item.querySelector('.correct-btn');
+          const incorrectBtn = item.querySelector('.incorrect-btn');
+          const isSelected = correctBtn.classList.contains('active-correct') || 
+                            incorrectBtn.classList.contains('active-incorrect');
+          if (!isSelected) {
+            hasUnselectedItems = true;
+          }
+        });
+        
+        if (hasUnselectedItems) {
+          // 顯示警告 Modal
+          const modal = new bootstrap.Modal(document.getElementById('incompleteModal'));
+          modal.show();
+          return;
+        }
+        
+        // 如果都有選擇，則進行複製
         navigator.clipboard
           .writeText(md)
           .then(() => {
