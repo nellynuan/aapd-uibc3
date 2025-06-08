@@ -6,6 +6,7 @@
     <title>作業批改回饋區</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -97,6 +98,7 @@
         box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
         padding-top: 20px;
         padding-bottom: 20px;
+        overflow: visible;
       }
 
       .table-box::-webkit-scrollbar {
@@ -347,52 +349,6 @@
         transition: all 0.2s;
       }
 
-      .info-button::before {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: calc(100% + 8px);
-        right: -8px;
-        background: #2A2A3A;
-        color: white;
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 14px;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        max-width: 300px;
-        white-space: normal;
-        line-height: 1.4;
-        word-wrap: break-word;
-      }
-
-      .info-button::after {
-        content: '';
-        position: absolute;
-        bottom: calc(100% + 2px);
-        left: 50%;
-        transform: translateX(-50%);
-        border: 6px solid transparent;
-        border-top-color: #2A2A3A;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1001;
-      }
-
-      .info-button:hover::before,
-      .info-button:hover::after {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .info-button:hover::after {
-        transform: translateX(-50%) translateY(0);
-      }
-
       .category-items .condition-item {
         display: flex;
         align-items: center;
@@ -591,6 +547,15 @@
           createButtons(data.baseDeductData, "tbody-2", "base");
           createButtons(data.advDeductData, "tbody-3", "adv");
           updateFeedbackArea();
+          
+          // 初始化 Bootstrap tooltips
+          const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+          const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+              boundary: document.body
+            });
+          });
+          
           Swal.close();
         })
         .catch((error) => {
@@ -631,7 +596,7 @@
                 </button>
               </div>
               <div class="condition-text">${title}</div>
-              <button class="info-button" data-tooltip="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+              <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
                 <i class="ph ph-info"></i>
               </button>
             `;
@@ -684,7 +649,7 @@
             categoryDiv.innerHTML = `
               <div class="category-row" style="margin-top: 12px;">
                 <span>${category}</span>
-                <button class="info-button" data-tooltip="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
                   <i class="ph ph-info"></i>
                 </button>
               </div>
