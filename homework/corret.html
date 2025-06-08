@@ -230,16 +230,26 @@
 
       #incompleteModal .btn-close {
         position: absolute;
-        top: 24px;
-        right: 24px;
+        top: 12px;
+        right: 12px;
         background: none;
         border: none;
-        font-size: 20px;
+        font-size: 24px;
         opacity: 0.5;
+        z-index: 1050;
+        color: #000;
+        width: auto;
+        height: auto;
+        padding: 0;
       }
 
       #incompleteModal .btn-close:hover {
         opacity: 1;
+      }
+
+      #incompleteModal .btn-close:focus {
+        outline: none !important;
+        box-shadow: none !important;
       }
 
       .btn-copy {
@@ -249,7 +259,8 @@
       .btn:focus,
       .btn-copy:focus,
       .btn-clear:focus,
-      button:focus {
+      button:focus,
+      .condition-btn:focus {
         outline: none !important;
         box-shadow: none !important;
         border-color: initial !important;
@@ -683,7 +694,7 @@
     <div class="modal fade" id="incompleteModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-body">
             還有「基礎條件」沒有批改完成，再檢查一下喔！
             <img src="https://scontent.ftpe7-2.fna.fbcdn.net/v/t39.30808-6/471303619_10231175542870148_2440793267832562341_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=tKW0VMW_BU0Q7kNvwGKxRDP&_nc_oc=AdlS99lfZRhSSn0Wma8KTLHBg8kN0wwj6nT8tocSRZR_Tzdu569NiTsK5m_GNUzupR57k1-IcdXWUP3wy3bGgaOS&_nc_zt=23&_nc_ht=scontent.ftpe7-2.fna&_nc_gid=Klf05YcoIqCIIKbSWFZ5Cw&oh=00_AfP_RzgutrwUzPu6WAlldszGhM3yToDLa6nRurd6Gdjvow&oe=684AF1B1" alt="修但幾勒">
@@ -1045,7 +1056,7 @@
         const challenge = orderedChallengeConditions.length > 0 ? orderedChallengeConditions.join("\n\n") : "";
         
         // 處理開頭文字的換行，讓 Notion 變成不同 block
-        const processedOpeningText = openingText.replace(/\n/g, '\n\n');
+        const processedOpeningText = openingText ? openingText.replace(/\n/g, '\n\n') : '';
         
         let feedbackContent = `${processedOpeningText}\n\n### 基礎條件\n${basic}`;
         
