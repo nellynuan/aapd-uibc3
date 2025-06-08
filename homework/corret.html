@@ -221,10 +221,8 @@
         border-color: #0a3a75;
       }
 
-      #incompleteModal .btn-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
+      .btn-copy {
+        position: relative;
       }
 
       .table-box::-webkit-scrollbar {
@@ -526,8 +524,16 @@
         transform: translateY(0);
       }
 
-      .btn-copy {
-        position: relative;
+      #incompleteModal .btn-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .btn-copy:focus,
+      .btn-clear:focus {
+        outline: none;
+        box-shadow: none;
       }
     </style>
   </head>
@@ -562,7 +568,7 @@
           <div class="top-right">
             <div class="d-flex gap-3 h-100 align-items-end">
               <div class="content-box w-100">
-                <div class="content" id="grading-result">
+                <div class="content" id="grading-result" style="color: #6E7781;">
                   這份作業尚未批改完成
                 </div>
                 <small>批改結果僅作為參考，助教仍可斟酌調整評級</small>
@@ -934,21 +940,25 @@
         
         const resultDiv = document.getElementById('grading-result');
         
-        // 1. 如果有任何基礎條件是 X -> 待加強
-        if (hasIncorrect) {
-          resultDiv.innerHTML = '同學對於本週的基礎知識仍不熟悉，因此作業表現為「<span style="color: #C84700; font-weight: bold;">待加強</span>」，班長需要多花點心思留意學習狀況 🥺';
+        // 1. 如果基礎條件尚未完成 -> 尚未批改完成 (包含有X的情況)
+        if (!basicAllChecked) {
+          resultDiv.innerHTML = '這份作業尚未批改完成';
+          resultDiv.style.color = '#6E7781';
           return;
         }
         
-        // 2. 如果基礎條件尚未完成 -> 尚未批改完成
-        if (!basicAllChecked) {
-          resultDiv.innerHTML = '這份作業尚未批改完成';
+        // 2. 基礎條件全部完成，但有 X -> 待加強
+        if (hasIncorrect) {
+          resultDiv.innerHTML = '同學對於本週的基礎知識仍不熟悉，因此作業表現為「<span style="color: #C84700; font-weight: bold;">待加強</span>」，班長需要多花點心思留意學習狀況 🥺';
+          resultDiv.style.color = '#32302C';
           return;
         }
         
         // 3. 基礎條件全部是 O，計算進階和挑戰平均分數
         const advancedScore = calculateAverageScore('base');
         const challengeScore = calculateAverageScore('adv');
+        
+        resultDiv.style.color = '#32302C';
         
         if (advancedScore >= 2 && challengeScore >= 2) {
           // 模範候選
