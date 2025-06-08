@@ -106,6 +106,42 @@
         width: max-content;
       }
 
+      /* Modal 自訂樣式 */
+      #incompleteModal .modal-header {
+        border-bottom: none;
+        text-align: center;
+        justify-content: center;
+        padding-bottom: 0;
+      }
+
+      #incompleteModal .modal-body {
+        text-align: center;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      #incompleteModal .modal-footer {
+        border-top: none;
+        justify-content: center;
+        padding-top: 0;
+      }
+
+      #incompleteModal .btn-primary {
+        background-color: #0C4285;
+        border-color: #0C4285;
+      }
+
+      #incompleteModal .btn-primary:hover {
+        background-color: #0a3a75;
+        border-color: #0a3a75;
+      }
+
+      #incompleteModal .btn-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+
       .table-box::-webkit-scrollbar {
         width: 6px;
       }
@@ -194,6 +230,10 @@
       .bottom-section {
         flex: 1;
         min-height: 0;
+      }
+
+      .feedback-content p {
+        margin-bottom: 4px;
       }
 
       .top-left {
@@ -441,7 +481,7 @@
       </div>
 
       <div class="bottom-section">
-        <div class="d-flex gap-2 h-100">
+        <div class="d-flex gap-3 h-100">
           <div class="bottom-left">
             <div class="text-box">
               <div class="d-flex gap-2 h-100" style="align-items: flex-start;">
