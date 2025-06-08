@@ -102,7 +102,7 @@
 
       /* Bootstrap tooltip 自訂樣式 */
       .tooltip {
-        max-width: 300px !important;
+        max-width: 400px !important;
       }
 
       .table-box::-webkit-scrollbar {
@@ -237,7 +237,7 @@
       }
 
       .condition-item {
-        margin-bottom: 0px;
+        margin-bottom: 4px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -600,7 +600,7 @@
                 </button>
               </div>
               <div class="condition-text">${title}</div>
-              <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+              <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="${groupedItems[title].description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
                 <i class="ph ph-info"></i>
               </button>
             `;
@@ -653,7 +653,7 @@
             categoryDiv.innerHTML = `
               <div class="category-row" style="margin-top: 12px;">
                 <span>${category}</span>
-                <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
+                <button class="info-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-trigger="hover" data-bs-title="${categoryData.description}" onmouseenter="this.querySelector('i').className='ph-fill ph-info'" onmouseleave="this.querySelector('i').className='ph ph-info'">
                   <i class="ph ph-info"></i>
                 </button>
               </div>
