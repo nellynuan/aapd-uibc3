@@ -616,7 +616,7 @@
         <div class="d-flex gap-3">
           <div class="top-left">
             <div class="p-3">
-                              <h1 class="section-title">
+              <h1 class="section-title">
                 助教 <span id="ta_text"></span> 的
                 <span id="work_text"></span> 作業批改區
               </h1>
@@ -734,6 +734,11 @@
       let originalOrder = [];
       let originalOrderAdvanced = {};
       let originalOrderChallenge = {};
+      // 新增：存儲每個類別的總項目數
+      let categoryItemCounts = {
+        advanced: {},
+        challenge: {}
+      };
 
       const api = {
         Week1:
@@ -859,6 +864,16 @@
             }
             categorizedItems[category].items.push([item, content, score]);
             categoryOrder[category].push(item);
+          });
+          
+          // 儲存每個類別的項目數量
+          Object.keys(categorizedItems).forEach(category => {
+            const itemCount = categorizedItems[category].items.length;
+            if (type === "base") {
+              categoryItemCounts.advanced[category] = itemCount;
+            } else {
+              categoryItemCounts.challenge[category] = itemCount;
+            }
           });
           
           if (type === "base") {
@@ -1030,13 +1045,38 @@
         }
       }
       
+      // 修改後的算法：(該類別選擇項目分數總和) ÷ (該類別總項目數)
       function calculateAverageScore(type) {
-        const selectedItems = feedbackList.filter(item => item.type === type);
-        if (selectedItems.length === 0) return 0;
+        // 取得相關的類別數據
+        const categoryData = type === 'base' ? categoryItemCounts.advanced : categoryItemCounts.challenge;
+        const categoryNames = Object.keys(categoryData);
         
-        const totalScore = selectedItems.reduce((sum, item) => sum + item.score, 0);
-        return totalScore / selectedItems.length;
+        if (categoryNames.length === 0) return 0;
+        
+        let totalCategoryScore = 0;
+        
+        // 對每個類別計算分數
+        categoryNames.forEach(category => {
+          const categoryItemCount = categoryData[category]; // 該類別總項目數
+          
+          // 找出該類別中被選擇的項目
+          const selectedItems = feedbackList.filter(item => 
+            item.type === type && 
+            document.querySelector(`[data-category="${category}"][data-item="${item.title}"]`)
+          );
+          
+          // 計算該類別被選擇項目的分數總和
+          const selectedScoreSum = selectedItems.reduce((sum, item) => sum + item.score, 0);
+          
+          // 該類別的平均分數 = 選擇項目分數總和 ÷ 該類別總項目數
+          const categoryScore = selectedScoreSum / categoryItemCount;
+          totalCategoryScore += categoryScore;
+        });
+        
+        // 回傳所有類別平均分數的總平均
+        return totalCategoryScore / categoryNames.length;
       }
+      
       function updateFeedbackArea() {
         console.log(feedbackList);
         
@@ -1149,35 +1189,6 @@
         copyBtn.appendChild(toast);
         
         // 顯示動畫
-        setTimeout(() => {
-          toast.classList.add('show');
-        }, 10);
-        
-        // 1秒後隱藏並移除
-        setTimeout(() => {
-          toast.classList.remove('show');
-          setTimeout(() => {
-            toast.remove();
-          }, 300);
-        }, 1000);
-      }
-
-      function clearFeedback() {
-        feedbackList = [];
-        
-        // 清除所有按鈕狀態
-        document.querySelectorAll('.condition-btn').forEach(btn => {
-          btn.classList.remove('active-correct', 'active-incorrect');
-        });
-        
-        document.querySelectorAll('.category-items .condition-item i').forEach(icon => {
-          icon.classList.remove("ph-fill", "ph-check-circle");
-          icon.classList.add("ph", "ph-circle");
-        });
-        
-        updateFeedbackArea();
-      }
-    </script>動畫
         setTimeout(() => {
           toast.classList.add('show');
         }, 10);
