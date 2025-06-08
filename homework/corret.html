@@ -192,22 +192,21 @@
       }
 
       /* Modal 自訂樣式 */
+      #incompleteModal .modal-content {
+        padding: 24px;
+      }
+
       #incompleteModal .modal-header {
-        border-bottom: none;
-        text-align: center;
-        justify-content: center;
-        padding-bottom: 16px;
+        display: none;
       }
 
       #incompleteModal .modal-body {
         text-align: center;
-        padding-top: 0;
-        padding-bottom: 16px;
+        padding: 0;
       }
 
       #incompleteModal .modal-body img {
-        margin-top: 16px;
-        margin-bottom: 24px;
+        margin-top: 24px;
         width: 200px;
         border-radius: 8px;
       }
@@ -215,7 +214,8 @@
       #incompleteModal .modal-footer {
         border-top: none;
         justify-content: center;
-        padding-top: 0;
+        padding: 0;
+        margin-top: 24px;
       }
 
       #incompleteModal .btn-primary {
@@ -228,15 +228,31 @@
         border-color: #0a3a75;
       }
 
+      #incompleteModal .btn-close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        opacity: 0.5;
+      }
+
+      #incompleteModal .btn-close:hover {
+        opacity: 1;
+      }
+
       .btn-copy {
         position: relative;
       }
 
       .btn:focus,
       .btn-copy:focus,
-      .btn-clear:focus {
+      .btn-clear:focus,
+      button:focus {
         outline: none !important;
         box-shadow: none !important;
+        border-color: initial !important;
       }
 
       .table-box::-webkit-scrollbar {
@@ -664,13 +680,10 @@
     </div>
 
     <!-- Bootstrap Modal for incomplete conditions -->
-    <div class="modal fade" id="incompleteModal" tabindex="-1" aria-labelledby="incompleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="incompleteModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="incompleteModalLabel">修但幾勒</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
           <div class="modal-body">
             還有「基礎條件」沒有批改完成，再檢查一下喔！
             <img src="https://scontent.ftpe7-2.fna.fbcdn.net/v/t39.30808-6/471303619_10231175542870148_2440793267832562341_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=tKW0VMW_BU0Q7kNvwGKxRDP&_nc_oc=AdlS99lfZRhSSn0Wma8KTLHBg8kN0wwj6nT8tocSRZR_Tzdu569NiTsK5m_GNUzupR57k1-IcdXWUP3wy3bGgaOS&_nc_zt=23&_nc_ht=scontent.ftpe7-2.fna&_nc_gid=Klf05YcoIqCIIKbSWFZ5Cw&oh=00_AfP_RzgutrwUzPu6WAlldszGhM3yToDLa6nRurd6Gdjvow&oe=684AF1B1" alt="修但幾勒">
@@ -1031,7 +1044,10 @@
         const advanced = orderedAdvancedConditions.length > 0 ? orderedAdvancedConditions.join("\n\n") : "";
         const challenge = orderedChallengeConditions.length > 0 ? orderedChallengeConditions.join("\n\n") : "";
         
-        let feedbackContent = `${openingText}\n\n### 基礎條件\n${basic}`;
+        // 處理開頭文字的換行，讓 Notion 變成不同 block
+        const processedOpeningText = openingText.replace(/\n/g, '\n\n');
+        
+        let feedbackContent = `${processedOpeningText}\n\n### 基礎條件\n${basic}`;
         
         if (advanced) {
           feedbackContent += `\n\n### 進階條件\n${advanced}`;
@@ -1114,18 +1130,18 @@
 
       function clearFeedback() {
         feedbackList = [];
-        updateFeedbackArea();
-
-        const icons = document.querySelectorAll("tr i");
-
-        icons.forEach((icon) => {
-          if (icon.classList.contains("ph-check-square")) {
-            icon.classList.remove("ph-fill");
-            icon.classList.remove("ph-check-square");
-            icon.classList.add("ph");
-            icon.classList.add("ph-square");
-          }
+        
+        // 清除所有按鈕狀態
+        document.querySelectorAll('.condition-btn').forEach(btn => {
+          btn.classList.remove('active-correct', 'active-incorrect');
         });
+        
+        document.querySelectorAll('.category-items .condition-item i').forEach(icon => {
+          icon.classList.remove("ph-fill", "ph-check-circle");
+          icon.classList.add("ph", "ph-circle");
+        });
+        
+        updateFeedbackArea();
       }
     </script>動畫
         setTimeout(() => {
