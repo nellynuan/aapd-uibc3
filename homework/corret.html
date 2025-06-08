@@ -1049,7 +1049,7 @@
         }
       }
       
-      // 修改後的算法：(該類別選擇項目分數總和) ÷ (該類別總項目數)
+      // 修正算法：每個類別只能選一個，分母應該是類別數量，不是項目數量
       function calculateAverageScore(type) {
         // 取得相關的類別數據
         const categoryData = type === 'base' ? categoryItemCounts.advanced : categoryItemCounts.challenge;
@@ -1057,28 +1057,24 @@
         
         if (categoryNames.length === 0) return 0;
         
-        let totalCategoryScore = 0;
+        let totalScore = 0;
         
-        // 對每個類別計算分數
+        // 對每個類別找出被選擇的項目分數
         categoryNames.forEach(category => {
-          const categoryItemCount = categoryData[category]; // 該類別總項目數
-          
           // 找出該類別中被選擇的項目
           const selectedItems = feedbackList.filter(item => 
             item.type === type && 
             document.querySelector(`[data-category="${category}"][data-item="${item.title}"]`)
           );
           
-          // 計算該類別被選擇項目的分數總和
-          const selectedScoreSum = selectedItems.reduce((sum, item) => sum + item.score, 0);
-          
-          // 該類別的平均分數 = 選擇項目分數總和 ÷ 該類別總項目數
-          const categoryScore = selectedScoreSum / categoryItemCount;
-          totalCategoryScore += categoryScore;
+          // 每個類別只能選一個項目，所以取第一個選擇的項目分數
+          // 如果沒有選擇，則該類別得 0 分
+          const categoryScore = selectedItems.length > 0 ? selectedItems[0].score : 0;
+          totalScore += categoryScore;
         });
         
-        // 回傳所有類別平均分數的總平均
-        return totalCategoryScore / categoryNames.length;
+        // 回傳總分數 ÷ 類別數量
+        return totalScore / categoryNames.length;
       }
       
       function updateFeedbackArea() {
