@@ -80,37 +80,37 @@
         }
         
         .top-section .d-flex {
-          gap: 8px;
+          gap: 8px !important;
         }
         
         .top-right .d-flex {
-          gap: 8px;
+          gap: 8px !important;
         }
         
         .top-right {
-          width: 400px;
+          width: 400px !important;
         }
       }
 
       /* xl: 1200px+ */
       @media (min-width: 1200px) {
         .top-section .d-flex {
-          gap: 16px;
+          gap: 16px !important;
         }
         
         .top-right {
-          width: 580px;
+          width: 580px !important;
         }
       }
 
       /* xxl: 1352px+ */
       @media (min-width: 1352px) {
         .top-right {
-          width: 600px;
+          width: 600px !important;
         }
         
         .top-section .d-flex {
-          gap: 24px;
+          gap: 24px !important;
         }
       }
 
@@ -562,8 +562,8 @@
           <div class="top-right">
             <div class="d-flex gap-3 h-100 align-items-end">
               <div class="content-box w-100">
-                <div class="content">
-                  這份作業在「基礎錯誤」項目有被扣分，因此作業評級為「有待加強」
+                <div class="content" id="grading-result">
+                  這份作業尚未批改完成
                 </div>
                 <small>批改結果僅作為參考，助教仍可斟酌調整評級</small>
               </div>
@@ -912,6 +912,63 @@
         updateFeedbackArea();
       }
 
+      function updateGradingResult() {
+        const basicConditionItems = document.querySelectorAll('#condition-group-1 .condition-item');
+        let basicAllChecked = true;
+        let hasIncorrect = false;
+        
+        // 檢查基礎條件
+        basicConditionItems.forEach(item => {
+          const correctBtn = item.querySelector('.correct-btn');
+          const incorrectBtn = item.querySelector('.incorrect-btn');
+          const isCorrect = correctBtn.classList.contains('active-correct');
+          const isIncorrect = incorrectBtn.classList.contains('active-incorrect');
+          
+          if (!isCorrect && !isIncorrect) {
+            basicAllChecked = false;
+          }
+          if (isIncorrect) {
+            hasIncorrect = true;
+          }
+        });
+        
+        const resultDiv = document.getElementById('grading-result');
+        
+        // 1. 如果有任何基礎條件是 X -> 待加強
+        if (hasIncorrect) {
+          resultDiv.innerHTML = '同學對於本週的基礎知識仍不熟悉，因此作業表現為「<span style="color: #C84700; font-weight: bold;">待加強</span>」，班長需要多花點心思留意學習狀況 🥺';
+          return;
+        }
+        
+        // 2. 如果基礎條件尚未完成 -> 尚未批改完成
+        if (!basicAllChecked) {
+          resultDiv.innerHTML = '這份作業尚未批改完成';
+          return;
+        }
+        
+        // 3. 基礎條件全部是 O，計算進階和挑戰平均分數
+        const advancedScore = calculateAverageScore('base');
+        const challengeScore = calculateAverageScore('adv');
+        
+        if (advancedScore >= 2 && challengeScore >= 2) {
+          // 模範候選
+          resultDiv.innerHTML = '同學的作業在進階和挑戰項目的表現十分突出，可列為「<span style="color: #D5147E; font-weight: bold;">模範候選</span>」，值得在榮譽榜大力表揚！🥳';
+        } else if (advancedScore >= 2 && challengeScore < 2) {
+          // 優秀候選
+          resultDiv.innerHTML = '同學在進階項目表現亮眼，因此作業表現可列入「<span style="color: #377ECC; font-weight: bold;">優秀候選</span>」！是同學們的學習對象 💪🏻';
+        } else {
+          // 及格
+          resultDiv.innerHTML = '同學有掌握本週的基礎知識，也有嘗試進階或挑戰項目，因此作業表現為「<span style="color: #57AD57; font-weight: bold;">及格</span>」，班長可以適當給予鼓勵 😆';
+        }
+      }
+      
+      function calculateAverageScore(type) {
+        const selectedItems = feedbackList.filter(item => item.type === type);
+        if (selectedItems.length === 0) return 0;
+        
+        const totalScore = selectedItems.reduce((sum, item) => sum + item.score, 0);
+        return totalScore / selectedItems.length;
+      }
       function updateFeedbackArea() {
         console.log(feedbackList);
         
@@ -963,6 +1020,9 @@
         
         md = feedbackContent;
         document.getElementById("previewArea").innerHTML = marked.parse(md);
+        
+        // 更新評級結果
+        updateGradingResult();
       }
 
       function copyFeedback() {
