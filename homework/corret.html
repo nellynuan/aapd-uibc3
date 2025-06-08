@@ -256,20 +256,10 @@
         position: relative;
       }
 
-      /* 強制移除所有按鈕的 focus 樣式 */
-      *, *:focus, *:active {
-        outline: none !important;
-        box-shadow: none !important;
-      }
-      
-      .btn, .btn:focus, .btn:active, .btn.active,
-      .btn-copy, .btn-copy:focus, .btn-copy:active,
-      .btn-clear, .btn-clear:focus, .btn-clear:active,
-      .condition-btn, .condition-btn:focus, .condition-btn:active,
-      button, button:focus, button:active {
-        outline: none !important;
-        box-shadow: none !important;
-        border-color: inherit !important;
+      .btn-copy:focus,
+      .btn-clear:focus {
+        outline: none;
+        box-shadow: none;
       }
 
       .table-box::-webkit-scrollbar {
@@ -311,7 +301,6 @@
         font-weight: 500;
         display: flex;
         align-items: center;
-        justify-content: center;
       }
 
       .table-box h2 i {
@@ -548,6 +537,7 @@
 
       #previewArea h3 {
         font-size: 20px;
+        margin-top: 16px;
       }
 
       .copy-toast {
@@ -663,7 +653,7 @@
             <div class="table-box">
               <div>
                 <h2
-                  class="d-flex justify-content-center align-items-center title title-success"
+                  class="d-flex justify-content-between align-items-end title title-success"
                 >
                   <span><i class="ph-fill ph-triangle"></i>基礎條件</span>
                 </h2>
@@ -674,7 +664,7 @@
               </div>
               <div class="pt-4">
                 <h2
-                  class="d-flex justify-content-center align-items-center title title-warning"
+                  class="d-flex justify-content-between align-items-end title title-warning"
                 >
                   <span><i class="ph-fill ph-shapes"></i>進階條件</span>
                 </h2>
@@ -683,7 +673,7 @@
               </div>
               <div class="pt-4">
                 <h2
-                  class="d-flex justify-content-center align-items-center title title-danger"
+                  class="d-flex justify-content-between align-items-end title title-danger"
                 >
                   <span><i class="ph ph-sketch-logo"></i>挑戰條件</span>
                 </h2>
