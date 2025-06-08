@@ -29,6 +29,106 @@
         overflow: hidden;
       }
 
+      /* 響應式設計 */
+      /* 小於 420px */
+      @media (max-width: 419px) {
+        .main-content {
+          display: none;
+        }
+        
+        .mobile-message {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          font-size: 18px;
+          color: #6e7781;
+          text-align: center;
+          padding: 20px;
+        }
+      }
+
+      /* 420px 到 849px */
+      @media (min-width: 420px) and (max-width: 849px) {
+        .main-content {
+          display: none;
+        }
+        
+        .tablet-message {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          font-size: 18px;
+          color: #6e7781;
+          text-align: center;
+          padding: 20px;
+        }
+      }
+
+      /* 850px 以上才顯示主要內容 */
+      @media (min-width: 850px) {
+        .main-content {
+          display: flex;
+        }
+        
+        .mobile-message,
+        .tablet-message {
+          display: none;
+        }
+      }
+
+      /* lg: 850px+ */
+      @media (min-width: 850px) {
+        .container {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        
+        .top-section .d-flex {
+          gap: 8px;
+        }
+        
+        .top-right .d-flex {
+          gap: 8px;
+        }
+        
+        .top-right {
+          width: 400px;
+        }
+      }
+
+      /* xl: 1200px+ */
+      @media (min-width: 1200px) {
+        .container {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        
+        .top-section .d-flex {
+          gap: 16px;
+        }
+        
+        .top-right .d-flex {
+          gap: 8px;
+        }
+        
+        .top-right {
+          width: 580px;
+        }
+      }
+
+      /* xxl: 1352px+ */
+      @media (min-width: 1352px) {
+        .top-right {
+          width: 600px;
+        }
+        
+        .top-section .d-flex {
+          gap: 24px;
+        }
+      }
+
       tr {
         cursor: pointer;
       }
@@ -447,6 +547,18 @@
     </style>
   </head>
   <body>
+    <!-- 手機版訊息 -->
+    <div class="mobile-message">
+      不可能還想用手機批改欸！請去躺平休息謝謝
+    </div>
+    
+    <!-- 平板版訊息 -->
+    <div class="tablet-message">
+      這個寬度不適合批改囉！再幫我拉大一點
+    </div>
+    
+    <!-- 主要內容 -->
+    <div class="main-content">
     <div class="container">
       <div class="top-section">
         <div class="d-flex gap-3">
@@ -543,6 +655,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 
     <!-- Bootstrap Modal for incomplete conditions -->
