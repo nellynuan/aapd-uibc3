@@ -1013,34 +1013,38 @@
         
         const resultDiv = document.getElementById('grading-result');
         
-        // 1. 如果基本條件尚未完成 -> 尚未批改完成 (包含有X的情況)
+        // 1. 如果基本條件尚未完成 -> 尚未批改完成
         if (!basicAllChecked) {
           resultDiv.innerHTML = '這份作業尚未批改完成';
           resultDiv.style.color = '#6E7781';
           return;
         }
         
-        // 2. 基本條件全部完成，但有 X -> 待加強
+        // 2. 待加強：基礎條件有任何一個是 X
         if (hasIncorrect) {
           resultDiv.innerHTML = '同學對於本週的基本知識仍不熟悉，因此作業表現為「<span style="color: #C84700; font-weight: bold;">待加強</span>」，班長需要多花點心思留意學習狀況 🥺';
           resultDiv.style.color = '#32302C';
           return;
         }
         
-        // 3. 基本條件全部是 O，計算進階和挑戰平均分數
+        // 3. 基本條件全部是 O，計算進階和挑戰分數
         const advancedScore = calculateAverageScore('base');
         const challengeScore = calculateAverageScore('adv');
         
+        console.log('進階分數:', advancedScore, '挑戰分數:', challengeScore);
+        
         resultDiv.style.color = '#32302C';
         
+        // 4. 模範候選：基礎全 O + 進階≥2分 + 挑戰≥2分
         if (advancedScore >= 2 && challengeScore >= 2) {
-          // 模範候選
           resultDiv.innerHTML = '同學的作業在進階和挑戰項目的表現十分突出，可列為「<span style="color: #D5147E; font-weight: bold;">模範候選</span>」，值得在榮譽榜大力表揚！🥳';
-        } else if (advancedScore >= 2 && challengeScore < 2) {
-          // 優秀候選
+        }
+        // 5. 優秀候選：基礎全 O + 進階≥2分 + 挑戰<2分
+        else if (advancedScore >= 2 && challengeScore < 2) {
           resultDiv.innerHTML = '同學在進階項目表現亮眼，因此作業表現可列入「<span style="color: #377ECC; font-weight: bold;">優秀候選</span>」！是同學們的學習對象 💪🏻';
-        } else {
-          // 及格
+        }
+        // 6. 及格：基礎全 O + 進階<2分 + 挑戰<2分
+        else {
           resultDiv.innerHTML = '同學有掌握本週的基本知識，也有嘗試進階或挑戰項目，因此作業表現為「<span style="color: #57AD57; font-weight: bold;">及格</span>」，班長可以適當給予鼓勵 😆';
         }
       }
