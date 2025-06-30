@@ -135,7 +135,8 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        /* 🎯 移除 overflow: hidden，改為允許滾動 */
+        overflow: visible;
         position: relative;
       }
 
@@ -379,29 +380,32 @@
         height: 100%;
       }
 
+      /* 🎯 修復滾動區域 */
       .feedback-content {
         flex: 1;
-        overflow-y: auto;
-        padding-right: 8px;
-        margin-bottom: 60px;
         min-height: 0;
+        overflow-y: auto;
+        padding-right: 8px;
+        /* 🔧 調整 margin-bottom，為按鈕留出空間 */
+        padding-bottom: 70px;
       }
 
+      /* 🎯 讓 previewArea 可以滾動 */
       #previewArea {
-        height: 100%;
-        overflow-y: auto;
+        /* 移除 height: 100% 和 overflow-y: auto，讓內容自然展開 */
         padding-right: 8px;
       }
 
-      #previewArea::-webkit-scrollbar {
+      /* 🎯 美化滾動條 */
+      .feedback-content::-webkit-scrollbar {
         width: 6px;
       }
 
-      #previewArea::-webkit-scrollbar-track {
+      .feedback-content::-webkit-scrollbar-track {
         background: transparent;
       }
 
-      #previewArea::-webkit-scrollbar-thumb {
+      .feedback-content::-webkit-scrollbar-thumb {
         background: #D1D5DB;
         border-radius: 3px;
       }
@@ -415,6 +419,8 @@
         padding: 8px;
         border-radius: 8px;
         backdrop-filter: blur(10px);
+        /* 🎯 確保按鈕在最上層 */
+        z-index: 10;
       }
 
       .condition-group {
