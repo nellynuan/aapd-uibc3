@@ -128,16 +128,14 @@
       }
 
       .text-box {
-        padding: 16px 20px 12px 12px;
         border: 2px solid #dbdbdb;
         border-radius: 10px;
         background-color: #f8f8f7;
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        /* 🎯 保持 overflow: hidden 避免溢出 */
-        overflow: hidden;
+        /* 🎯 重新設計：為按鈕預留空間，避免 flex 計算問題 */
+        padding: 16px 20px 60px 12px;
         position: relative;
+        overflow: hidden;
       }
 
       .btn-copy {
@@ -380,10 +378,9 @@
         height: 100%;
       }
 
-      /* 🎯 新增：內容包裝層，關鍵是這個！ */
+      /* 🎯 簡化結構：直接讓 wrapper 佔滿整個空間 */
       .feedback-wrapper {
-        flex: 1;
-        min-height: 0;
+        height: 100%;
         display: flex;
         gap: 8px;
         align-items: flex-start;
@@ -392,11 +389,10 @@
       /* 🎯 修復滾動區域 */
       .feedback-content {
         flex: 1;
-        min-height: 0;
+        height: 100%;
         overflow-y: auto;
         padding-right: 8px;
-        /* 🔧 調整 padding-bottom，為按鈕留出空間 */
-        padding-bottom: 70px;
+        /* 🔧 移除 padding-bottom，因為容器已經預留空間 */
       }
 
       /* 🎯 讓 previewArea 內容自然展開 */
