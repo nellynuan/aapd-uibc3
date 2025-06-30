@@ -135,8 +135,8 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        /* 🎯 移除 overflow: hidden，改為允許滾動 */
-        overflow: visible;
+        /* 🎯 保持 overflow: hidden 避免溢出 */
+        overflow: hidden;
         position: relative;
       }
 
@@ -380,19 +380,27 @@
         height: 100%;
       }
 
+      /* 🎯 新增：內容包裝層，關鍵是這個！ */
+      .feedback-wrapper {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
       /* 🎯 修復滾動區域 */
       .feedback-content {
         flex: 1;
         min-height: 0;
         overflow-y: auto;
         padding-right: 8px;
-        /* 🔧 調整 margin-bottom，為按鈕留出空間 */
+        /* 🔧 調整 padding-bottom，為按鈕留出空間 */
         padding-bottom: 70px;
       }
 
-      /* 🎯 讓 previewArea 可以滾動 */
+      /* 🎯 讓 previewArea 內容自然展開 */
       #previewArea {
-        /* 移除 height: 100% 和 overflow-y: auto，讓內容自然展開 */
         padding-right: 8px;
       }
 
@@ -655,7 +663,8 @@
         <div class="d-flex gap-2 h-100">
           <div class="bottom-left">
             <div class="text-box">
-              <div class="d-flex gap-2 h-100" style="align-items: flex-start;">
+              <!-- 🎯 新增包裝層來正確處理 flex 高度 -->
+              <div class="feedback-wrapper">
                 <div class="edit-icon" style="flex-shrink: 0;">
                   <img
                     src="https://www.notion.so/icons/drafts_gray.svg?mode=light"
