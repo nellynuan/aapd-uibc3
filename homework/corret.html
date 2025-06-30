@@ -176,11 +176,33 @@
       .table-box {
         background-color: #fff;
         border-radius: 8px;
-        /* 🎯 簡化：直接用 padding-top 加上白色背景 */
-        padding: 32px 20px 20px 20px;
+        /* 🎯 容器不滾動，只負責外觀 */
+        padding: 20px;
+        height: 100%;
+        box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
+        /* 移除 overflow-y: auto */
+      }
+
+      /* 🎯 新增內層滾動容器 */
+      .table-content {
         height: 100%;
         overflow-y: auto;
-        box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      /* 🎯 右邊滾動條樣式 */
+      .table-content::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .table-content::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .table-content::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 3px;
       }
 
       /* 🎯 Loading Alert 圓角樣式，與其他 modal 保持一致 */
@@ -280,15 +302,16 @@
         opacity: 0.7;
       }
 
-      .table-box::-webkit-scrollbar {
+      /* 🎯 左邊滾動條樣式 */
+      .feedback-content::-webkit-scrollbar {
         width: 6px;
       }
 
-      .table-box::-webkit-scrollbar-track {
+      .feedback-content::-webkit-scrollbar-track {
         background: transparent;
       }
 
-      .table-box::-webkit-scrollbar-thumb {
+      .feedback-content::-webkit-scrollbar-thumb {
         background: #D1D5DB;
         border-radius: 3px;
       }
@@ -697,34 +720,37 @@
 
           <div class="bottom-right">
             <div class="table-box">
-              <div>
-                <h2
-                  class="d-flex justify-content-between align-items-end title title-success"
-                >
-                  <span><i class="ph-fill ph-triangle"></i>基本條件</span>
-                </h2>
+              <!-- 🎯 新增內層滾動容器 -->
+              <div class="table-content">
+                <div>
+                  <h2
+                    class="d-flex justify-content-between align-items-end title title-success"
+                  >
+                    <span><i class="ph-fill ph-triangle"></i>基本條件</span>
+                  </h2>
 
-                <div class="condition-group" id="condition-group-1">
-                  <!-- 基本條件項目會動態生成在這裡 -->
+                  <div class="condition-group" id="condition-group-1">
+                    <!-- 基本條件項目會動態生成在這裡 -->
+                  </div>
                 </div>
-              </div>
-              <div class="pt-4">
-                <h2
-                  class="d-flex justify-content-between align-items-end title title-warning"
-                >
-                  <span><i class="ph-fill ph-shapes"></i>進階條件</span>
-                </h2>
+                <div class="pt-4">
+                  <h2
+                    class="d-flex justify-content-between align-items-end title title-warning"
+                  >
+                    <span><i class="ph-fill ph-shapes"></i>進階條件</span>
+                  </h2>
 
-                <div id="advanced-conditions"></div>
-              </div>
-              <div class="pt-4">
-                <h2
-                  class="d-flex justify-content-between align-items-end title title-danger"
-                >
-                  <span><i class="ph ph-sketch-logo"></i>挑戰條件</span>
-                </h2>
+                  <div id="advanced-conditions"></div>
+                </div>
+                <div class="pt-4">
+                  <h2
+                    class="d-flex justify-content-between align-items-end title title-danger"
+                  >
+                    <span><i class="ph ph-sketch-logo"></i>挑戰條件</span>
+                  </h2>
 
-                <div id="challenge-conditions"></div>
+                  <div id="challenge-conditions"></div>
+                </div>
               </div>
             </div>
           </div>
