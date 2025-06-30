@@ -188,6 +188,11 @@
         margin-top: 12px;
       }
 
+      /* 🎯 Loading Alert 圓角樣式，與其他 modal 保持一致 */
+      .custom-loading-popup {
+        border-radius: 0.5rem !important;
+      }
+
       /* Bootstrap tooltip 自訂樣式 */
       .tooltip-inner {
         max-width: 300px !important;
@@ -782,8 +787,8 @@
       Swal.fire({
         title: "改完作業要記得休息喔！",
         html: `
-          <div style="text-align: center; padding: 20px;">
-            <p style="margin-bottom: 20px; color: #6e7781;">資料比較多，給它一點時間...</p>
+          <div style="text-align: center; padding-top: 24px;">
+            <p style="margin-bottom: 20px; color: #6e7781;">資料很快就出來了！</p>
             <img src="https://media1.tenor.com/m/6bLqzMcCDzEAAAAC/marmalady-loading-cat.gif" 
                  alt="loading cat" 
                  style="width: 120px; height: 120px; border-radius: 8px;">
