@@ -176,13 +176,11 @@
       .table-box {
         background-color: #fff;
         border-radius: 8px;
-        padding: 20px;
+        /* 🎯 修正：用簡寫方式設定 padding，上下32px，左右20px */
+        padding: 32px 20px;
         height: 100%;
         overflow-y: auto;
         box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
-        /* 🎯 增加上方空間，與左邊保持一致的呼吸感 */
-        padding-top: 32px;
-        padding-bottom: 32px;
       }
 
       /* Bootstrap tooltip 自訂樣式 */
@@ -258,8 +256,23 @@
 
       .btn-copy:focus,
       .btn-clear:focus {
-        outline: none;
-        box-shadow: none;
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+
+      /* 🎯 確保所有按鈕都移除 focus 樣式 */
+      .btn-copy,
+      .btn-clear {
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+
+      .btn-copy:hover,
+      .btn-clear:hover {
+        opacity: 0.7;
       }
 
       .table-box::-webkit-scrollbar {
@@ -601,12 +614,6 @@
         position: absolute;
         top: 1rem;
         right: 1rem;
-      }
-
-      .btn-copy:focus,
-      .btn-clear:focus {
-        outline: none;
-        box-shadow: none;
       }
     </style>
   </head>
