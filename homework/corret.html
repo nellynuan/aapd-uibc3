@@ -176,11 +176,16 @@
       .table-box {
         background-color: #fff;
         border-radius: 8px;
-        /* 🎯 修正：用簡寫方式設定 padding，上下32px，左右20px */
-        padding: 32px 20px;
+        /* 🎯 修正：padding 回到原本設定，在內容上加間距 */
+        padding: 20px;
         height: 100%;
         overflow-y: auto;
         box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.05);
+      }
+
+      /* 🎯 在滾動內容的第一個標題加上間距 */
+      .table-box h2.title-success:first-of-type {
+        margin-top: 12px;
       }
 
       /* Bootstrap tooltip 自訂樣式 */
@@ -406,9 +411,7 @@
         height: 100%;
         overflow-y: auto;
         padding-right: 8px;
-        /* 🎯 增加上方空間，與右邊保持一致 */
-        padding-top: 12px;
-        /* 🔧 移除 padding-bottom，因為容器已經預留空間 */
+        /* 🔧 移除上方 padding */
       }
 
       /* 🎯 讓 previewArea 內容自然展開 */
@@ -736,7 +739,8 @@
         <div class="modal-content">
           <div class="modal-body">
             還有「基本條件」沒有批改完成，再檢查一下喔！
-            <img src="https://scontent.ftpe7-2.fna.fbcdn.net/v/t39.30808-6/471303619_10231175542870148_2440793267832562341_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=tKW0VMW_BU0Q7kNvwGKxRDP&_nc_oc=AdlS99lfZRhSSn0Wma8KTLHBg8kN0wwj6nT8tocSRZR_Tzdu569NiTsK5m_GNUzupR57k1-IcdXWUP3wy3bGgaOS&_nc_zt=23&_nc_ht=scontent.ftpe7-2.fna&_nc_gid=Klf05YcoIqCIIKbSWFZ5Cw&oh=00_AfP_RzgutrwUzPu6WAlldszGhM3yToDLa6nRurd6Gdjvow&oe=684AF1B1" alt="修但幾勒">
+            <!-- 🎯 恢復原本圖片和樣式 -->
+            <img src="https://meee.com.tw/INbQWkA" alt="修但幾勒">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">好的</button>
